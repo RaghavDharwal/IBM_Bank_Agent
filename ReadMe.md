@@ -86,3 +86,4 @@ b. Launch the Frontend:
 Open a new terminal or use your computer's file explorer to navigate to the frontend directory. Double-click the index.html file. This will open the chat application in your default web browser.
 
 You can now start chatting with your virtual banking assistant!
+# thank you
