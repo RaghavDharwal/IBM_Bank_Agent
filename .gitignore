@@ -28,6 +28,10 @@ Thumbs.db
 *.log
 backend/*.log
 
+# Data files (contains user data - keep in gitignore for production)
+# backend/data/*.csv
+# backend/data/uploads/
+
 # Temporary files
 *.tmp
 *.temp
