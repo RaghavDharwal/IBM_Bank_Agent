@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Login - Banking Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            text-align: center;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header h1 {
+            color: #2563eb;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header .subtitle {
+            color: #64748b;
+            font-size: 1rem;
+        }
+        
+        .nav-links {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        
+        .nav-link {
+            background: #3b82f6;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        
+        .nav-link:hover {
+            background: #2563eb;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .login-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .login-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .login-header h2 {
+            color: #1e293b;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .login-header p {
+            color: #64748b;
+            font-size: 1rem;
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #374151;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            outline: none;
+        }
+        
+        .form-group input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+        
+        .login-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        /* Alert Messages */
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+        
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+        
+        /* Additional Info */
+        .login-info {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+        }
+        
+        .info-item {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        
+        .info-item h4 {
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-item p {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        /* Authentication Status Bar */
+        .auth-status-bar {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 0.8rem 1rem;
+            margin-bottom: 1rem;
+            border-radius: 6px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .auth-status-bar.show {
+            display: flex;
+        }
+        
+        .auth-status-bar .status-text {
+            color: #92400e;
+            font-weight: 500;
+        }
+        
+        .auth-status-bar .clear-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .login-container {
+                padding: 2rem;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>👩‍💼 Staff Portal</h1>
+        <p class="subtitle">Secure Staff Access to Banking Administration</p>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">🤖 Loan Agent</a>
+            <a href="apply.html" class="nav-link">💼 Apply for Loan</a>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="auth-status-bar" id="authStatusBar">
+            <span class="status-text" id="statusText"></span>
+            <button class="clear-btn" onclick="clearAllSessions()">Clear Session</button>
+        </div>
+        
+        <div class="login-container">
+            <div class="login-header">
+                <div class="login-icon">🔐</div>
+                <h2>Staff Login</h2>
+                <p>Access the administrative dashboard</p>
+            </div>
+            
+            <div class="alert alert-error" id="errorAlert"></div>
+            <div class="alert alert-success" id="successAlert"></div>
+            
+            <form id="staffLoginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required 
+                           placeholder="Enter your staff username">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required 
+                           placeholder="Enter your password">
+                </div>
+                
+                <button type="submit" class="login-btn" id="loginBtn">
+                    Sign In to Dashboard
+                </button>
+            </form>
+            
+            <div class="login-info">
+                <h4 style="color: #374151; margin-bottom: 1rem;">Staff Access Features:</h4>
+                
+                <div class="info-item">
+                    <h4>📋 Application Management</h4>
+                    <p>Review and process loan applications with AI-powered insights</p>
+                </div>
+                
+                <div class="info-item">
+                    <h4>📊 Analytics Dashboard</h4>
+                    <p>Monitor application trends and approval statistics</p>
+                </div>
+                
+                <div class="info-item">
+                    <h4>📧 Communication Center</h4>
+                    <p>Send email notifications and manage customer communications</p>
+                </div>
+                
+                <div class="info-item">
+                    <h4>🔍 Document Verification</h4>
+                    <p>Review uploaded documents and verify customer information</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const staffLoginForm = document.getElementById('staffLoginForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const errorAlert = document.getElementById('errorAlert');
+        const successAlert = document.getElementById('successAlert');
+
+        function showAlert(message, type) {
+            const alert = type === 'error' ? errorAlert : successAlert;
+            alert.textContent = message;
+            alert.style.display = 'block';
+            
+            // Hide the other alert
+            const otherAlert = type === 'error' ? successAlert : errorAlert;
+            otherAlert.style.display = 'none';
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000);
+        }
+
+        function clearUserSession() {
+            // Clear user session when staff logs in
+            localStorage.removeItem('currentUser');
+            fetch('/user-logout', { method: 'POST' }).catch(() => {});
+        }
+        
+        function checkConflictingSessions() {
+            // Check if user is logged in
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                const user = JSON.parse(savedUser);
+                showAuthWarning(`⚠️ User session detected. You are currently logged in as user: ${user.email}`);
+            }
+            
+            // Also check server-side user session
+            fetch('/user-auth-status')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.logged_in) {
+                        showAuthWarning(`⚠️ User session detected. You are currently logged in as user: ${data.email}`);
+                    }
+                })
+                .catch(() => {});
+        }
+        
+        function showAuthWarning(message) {
+            document.getElementById('statusText').textContent = message;
+            document.getElementById('authStatusBar').classList.add('show');
+        }
+        
+        function clearAllSessions() {
+            // Clear all sessions and localStorage
+            localStorage.clear();
+            fetch('/clear-all-sessions', { method: 'POST' })
+                .then(() => {
+                    location.reload();
+                })
+                .catch(() => location.reload());
+        }
+
+        staffLoginForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (!username || !password) {
+                showAlert('Please enter both username and password', 'error');
+                return;
+            }
+            
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Signing in...';
+            
+            try {
+                const response = await fetch('/staff-login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Clear user session when staff logs in
+                    clearUserSession();
+                    
+                    showAlert('Login successful! Redirecting to dashboard...', 'success');
+                    setTimeout(() => {
+                        window.location.href = '/admin-dashboard';
+                    }, 1500);
+                } else {
+                    showAlert(data.error || 'Login failed. Please check your credentials.', 'error');
+                }
+                
+            } catch (error) {
+                showAlert('Network error. Please try again.', 'error');
+            }
+            
+            loginBtn.disabled = false;
+            loginBtn.textContent = 'Sign In to Dashboard';
+        });
+
+        // Focus on username field when page loads
+        window.onload = function() {
+            document.getElementById('username').focus();
+            
+            // Check for conflicting sessions
+            checkConflictingSessions();
+        };
+        
+        // Handle Enter key in password field
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                staffLoginForm.dispatchEvent(new Event('submit'));
+            }
+        });
+    </script>
+</body>
+</html>

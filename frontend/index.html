@@ -3,214 +3,371 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bank Assistant</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>LoanAgent - AI Banking Assistant</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-        /* Custom scrollbar for a cleaner look */
-        #chat-window::-webkit-scrollbar {
-            width: 6px;
+        
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            text-align: center;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
         }
-        #chat-window::-webkit-scrollbar-track {
+        
+        .header h1 {
+            color: #2563eb;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header .subtitle {
+            color: #64748b;
+            font-size: 1rem;
+        }
+        
+        .nav-links {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        
+        .nav-link {
+            background: #3b82f6;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        
+        .nav-link:hover {
+            background: #2563eb;
+        }
+        
+        /* Chat Container */
+        .chat-container {
+            flex: 1;
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+        }
+        
+        .chat-header {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .chat-header h2 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .chat-status {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+        
+        /* Chat Messages */
+        .chat-messages {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 1rem 1.5rem;
+            border-radius: 18px;
+            line-height: 1.5;
+        }
+        
+        .user-message {
+            background: #3b82f6;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 6px;
+        }
+        
+        .bot-message {
             background: #f1f5f9;
+            color: #334155;
+            align-self: flex-start;
+            border-bottom-left-radius: 6px;
         }
-        #chat-window::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 3px;
+        
+        .typing-indicator {
+            display: none;
+            align-self: flex-start;
+            background: #f1f5f9;
+            padding: 1rem 1.5rem;
+            border-radius: 18px;
+            border-bottom-left-radius: 6px;
         }
-        #chat-window::-webkit-scrollbar-thumb:hover {
+        
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .typing-dot {
+            width: 8px;
+            height: 8px;
             background: #94a3b8;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+        
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+        
+        /* Chat Input */
+        .chat-input {
+            padding: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 1rem;
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .chat-input input:focus {
+            border-color: #3b82f6;
+        }
+        
+        .send-btn {
+            padding: 1rem 2rem;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .send-btn:hover {
+            background: #2563eb;
+        }
+        
+        .send-btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+        
+        /* Quick Actions */
+        .quick-actions {
+            padding: 1rem 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .quick-action {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .quick-action:hover {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .chat-container {
+                margin: 1rem;
+                height: calc(100vh - 200px);
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+            }
         }
     </style>
 </head>
-<body class="bg-slate-100 flex items-center justify-center min-h-screen">
-
-    <div class="w-full max-w-2xl h-[90vh] flex flex-col bg-white rounded-2xl shadow-2xl border border-slate-200">
+<body>
+    <div class="header">
+        <h1>🤖 LoanAgent</h1>
+        <p class="subtitle">Your AI-Powered Banking Assistant</p>
+        <div class="nav-links">
+            <a href="apply.html" class="nav-link">💼 Apply for Loan</a>
+            <a href="staff.html" class="nav-link">👩‍💼 Staff Login</a>
+        </div>
+    </div>
+    
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>💬 Chat with LoanAgent</h2>
+            <p class="chat-status">Online • Ready to help with your banking needs</p>
+        </div>
         
-        <!-- Header -->
-        <header class="bg-slate-800 text-white p-4 rounded-t-2xl shadow-md flex items-center">
-            <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mr-4 border-2 border-slate-500">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                </svg>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">
+                Hello! I'm LoanAgent, your AI banking assistant. I can help you with:
+                <br><br>
+                • Loan information and eligibility
+                <br>• Account inquiries  
+                <br>• Banking services
+                <br>• Application status
+                <br><br>
+                How can I assist you today?
             </div>
-            <div>
-                <h1 class="text-xl font-bold">Virtual Banking Assistant</h1>
-                <p class="text-sm text-slate-300">Online & Ready to Help</p>
+        </div>
+        
+        <div class="quick-actions">
+            <div class="quick-action" onclick="sendQuickMessage('What loan types do you offer?')">Loan Types</div>
+            <div class="quick-action" onclick="sendQuickMessage('How to check my eligibility?')">Eligibility Check</div>
+            <div class="quick-action" onclick="sendQuickMessage('What documents are needed?')">Required Documents</div>
+            <div class="quick-action" onclick="sendQuickMessage('How long is the approval process?')">Approval Time</div>
+        </div>
+        
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="Type your message here..." onkeypress="handleKeyPress(event)">
+            <button class="send-btn" onclick="sendMessage()" id="sendBtn">Send</button>
+        </div>
+        
+        <div class="typing-indicator" id="typingIndicator">
+            <div class="typing-dots">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
             </div>
-        </header>
-
-        <!-- Chat Window -->
-        <main id="chat-window" class="flex-1 p-6 overflow-y-auto space-y-6">
-            <!-- Initial Welcome Message -->
-            <div class="flex items-start gap-3">
-                <div class="flex-shrink-0 w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center text-white font-bold">A</div>
-                <div class="bg-slate-200 p-4 rounded-2xl rounded-tl-none max-w-lg">
-                    <p class="text-slate-800">Hello! I am your virtual banking assistant. How can I help you today? You can ask about loans, account details, or other services.</p>
-                </div>
-            </div>
-            <!-- Chat messages will be appended here -->
-        </main>
-
-        <!-- Input Area -->
-        <footer class="p-4 bg-white border-t border-slate-200 rounded-b-2xl">
-            <form id="chat-form" class="flex items-center gap-3">
-                <input 
-                    type="text" 
-                    id="user-input" 
-                    placeholder="Type your message here..." 
-                    class="flex-1 p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-300"
-                    autocomplete="off">
-                <button 
-                    type="submit"
-                    id="send-button"
-                    class="bg-blue-600 text-white p-3 rounded-xl hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-transform duration-150 active:scale-95 flex items-center justify-center w-14 h-12">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                    </svg>
-                </button>
-            </form>
-        </footer>
+        </div>
     </div>
 
     <script>
-        // --- DOM Element References ---
-        const chatForm = document.getElementById('chat-form');
-        const userInput = document.getElementById('user-input');
-        const chatWindow = document.getElementById('chat-window');
-        const sendButton = document.getElementById('send-button');
+        const chatMessages = document.getElementById('chatMessages');
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const typingIndicator = document.getElementById('typingIndicator');
 
-        // --- Configuration ---
-        // This is the URL where your Python backend is running.
-        const BACKEND_URL = 'http://127.0.0.1:5000/ask';
-
-        /**
-         * Appends a message to the chat window.
-         * @param {string} message - The text content of the message.
-         * @param {'user' | 'agent' | 'loading' | 'error'} type - The type of message, for styling.
-         * @returns {HTMLElement} The created message element.
-         */
-        function appendMessage(message, type) {
-            const messageElement = document.createElement('div');
-            
-            let content = '';
-            // This structure makes it easy to modify or add new message types later.
-            switch (type) {
-                case 'user':
-                    content = `
-                        <div class="flex items-start gap-3 justify-end">
-                            <div class="bg-blue-600 text-white p-4 rounded-2xl rounded-br-none max-w-lg">
-                                <p>${message}</p>
-                            </div>
-                            <div class="flex-shrink-0 w-10 h-10 bg-slate-300 rounded-full flex items-center justify-center text-slate-600 font-bold">U</div>
-                        </div>
-                    `;
-                    break;
-                case 'agent':
-                    // We replace newline characters with <br> tags for proper formatting.
-                    const formattedMessage = message.replace(/\n/g, '<br>').replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
-                    content = `
-                        <div class="flex items-start gap-3">
-                            <div class="flex-shrink-0 w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center text-white font-bold">A</div>
-                            <div class="bg-slate-200 p-4 rounded-2xl rounded-tl-none max-w-lg">
-                                <p class="text-slate-800">${formattedMessage}</p>
-                            </div>
-                        </div>
-                    `;
-                    break;
-                case 'loading':
-                    content = `
-                        <div id="loading-indicator" class="flex items-start gap-3">
-                            <div class="flex-shrink-0 w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center text-white font-bold">A</div>
-                            <div class="bg-slate-200 p-4 rounded-2xl rounded-tl-none">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-2 h-2 bg-slate-500 rounded-full animate-pulse"></div>
-                                    <div class="w-2 h-2 bg-slate-500 rounded-full animate-pulse" style="animation-delay: 0.2s;"></div>
-                                    <div class="w-2 h-2 bg-slate-500 rounded-full animate-pulse" style="animation-delay: 0.4s;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    break;
-                case 'error':
-                    content = `
-                        <div class="flex items-start gap-3">
-                            <div class="flex-shrink-0 w-10 h-10 bg-red-500 rounded-full flex items-center justify-center text-white font-bold">!</div>
-                            <div class="bg-red-100 border border-red-200 p-4 rounded-2xl rounded-tl-none max-w-lg">
-                                <p class="text-red-800">${message}</p>
-                            </div>
-                        </div>
-                    `;
-                    break;
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
             }
-            
-            messageElement.innerHTML = content;
-            chatWindow.appendChild(messageElement);
-            // Automatically scroll to the bottom to show the latest message.
-            chatWindow.scrollTop = chatWindow.scrollHeight;
-            return messageElement;
         }
 
-        /**
-         * Handles the form submission event.
-         * @param {Event} event - The form submission event.
-         */
-        async function handleFormSubmit(event) {
-            event.preventDefault(); // Prevent the default form submission (page reload)
-            
-            const userQuery = userInput.value.trim();
-            if (!userQuery) return; // Don't send empty messages
+        function sendQuickMessage(message) {
+            messageInput.value = message;
+            sendMessage();
+        }
 
-            // 1. Display the user's message immediately.
-            appendMessage(userQuery, 'user');
-            userInput.value = ''; // Clear the input field
+        async function sendMessage() {
+            const message = messageInput.value.trim();
+            if (!message) return;
+
+            // Add user message
+            addMessage(message, 'user');
+            messageInput.value = '';
             
-            // 2. Show a loading indicator while waiting for the response.
-            appendMessage('', 'loading');
+            // Disable send button and show typing
+            sendBtn.disabled = true;
+            showTyping();
 
             try {
-                // 3. Send the query to the backend API.
-                // This is where the communication happens.
-                const response = await fetch(BACKEND_URL, {
+                const response = await fetch('/ask', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    // The body is a JSON string. This is easily modifiable.
-                    // If you need to add more data, just add properties to this object.
-                    // For example: body: JSON.stringify({ query: userQuery, userId: '12345' })
-                    body: JSON.stringify({ query: userQuery }),
+                    body: JSON.stringify({ query: message })
                 });
 
-                // Remove the loading indicator once we have a response.
-                document.getElementById('loading-indicator')?.remove();
-
-                if (!response.ok) {
-                    // Handle HTTP errors (like 500 Internal Server Error)
-                    const errorData = await response.json();
-                    const errorMessage = `Error: ${errorData.error || 'Failed to connect to the agent.'}`;
-                    appendMessage(errorMessage, 'error');
-                    return;
-                }
-
-                // 4. Parse the successful JSON response and display the agent's reply.
                 const data = await response.json();
-                appendMessage(data.response, 'agent');
-
+                
+                // Hide typing and add bot response
+                hideTyping();
+                addMessage(data.response || data.error || 'Sorry, I encountered an error.', 'bot');
+                
             } catch (error) {
-                // Handle network errors (e.g., backend server is down)
-                console.error("Fetch Error:", error);
-                document.getElementById('loading-indicator')?.remove();
-                appendMessage('Sorry, I am having trouble connecting to the server. Please try again later.', 'error');
+                hideTyping();
+                addMessage('Sorry, I\'m having trouble connecting. Please try again.', 'bot');
             }
+            
+            sendBtn.disabled = false;
         }
 
-        // --- Event Listener ---
-        // Attach the submit event listener to the form.
-        chatForm.addEventListener('submit', handleFormSubmit);
+        function addMessage(message, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}-message`;
+            messageDiv.textContent = message;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTyping() {
+            typingIndicator.style.display = 'block';
+            chatMessages.appendChild(typingIndicator);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function hideTyping() {
+            typingIndicator.style.display = 'none';
+        }
+
+        // Focus on input when page loads
+        window.onload = function() {
+            messageInput.focus();
+            
+            // Check and clear any conflicting sessions
+            checkAndClearSessions();
+        };
+        
+        function checkAndClearSessions() {
+            // Clear any lingering authentication when on chat page
+            localStorage.removeItem('currentUser');
+            fetch('/clear-all-sessions', { method: 'POST' }).catch(() => {});
+        }
     </script>
 </body>
 </html>

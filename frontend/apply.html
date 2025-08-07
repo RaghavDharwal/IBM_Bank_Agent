@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for Loan - Banking Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            text-align: center;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header h1 {
+            color: #2563eb;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header .subtitle {
+            color: #64748b;
+            font-size: 1rem;
+        }
+        
+        .nav-links {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        
+        .nav-link {
+            background: #3b82f6;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        
+        .nav-link:hover {
+            background: #2563eb;
+        }
+        
+        /* Authentication Status Bar */
+        .auth-status-bar {
+            background: #f0f9ff;
+            border-left: 4px solid #0ea5e9;
+            padding: 0.8rem 1rem;
+            margin-bottom: 1rem;
+            border-radius: 6px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .auth-status-bar.show {
+            display: flex;
+        }
+        
+        .auth-status-bar .status-text {
+            color: #0c4a6e;
+            font-weight: 500;
+        }
+        
+        .auth-status-bar .clear-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        
+        /* Main Content */
+        .main-content {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .application-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .application-header {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .application-header h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .application-header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        /* Auth Section */
+        .auth-section {
+            padding: 2rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+        
+        .auth-tab {
+            padding: 0.8rem 2rem;
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .auth-tab.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        .auth-form {
+            display: none;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .auth-form.active {
+            display: grid;
+        }
+        
+        /* Form Styles */
+        .form-section {
+            padding: 2rem;
+        }
+        
+        .section-title {
+            color: #1e293b;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            margin-bottom: 0.5rem;
+            color: #374151;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            outline: none;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #3b82f6;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        /* Alert Messages */
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+        
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+        
+        .alert-info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #93c5fd;
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-primary:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #3b82f6;
+            padding: 1rem 2rem;
+            border: 2px solid #3b82f6;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .btn-secondary:hover {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        /* User Status */
+        .user-status {
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: none;
+        }
+        
+        .user-status.show {
+            display: block;
+        }
+        
+        /* Application Tabs */
+        .application-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        .app-tab {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #6b7280;
+            transition: all 0.3s;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .app-tab:hover {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        .app-tab.active {
+            color: #3b82f6;
+            border-bottom-color: #3b82f6;
+            background: #f0f9ff;
+        }
+        
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #9ca3af;
+        }
+        
+        /* Application Cards */
+        .application-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .application-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .application-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .application-id {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 1.1rem;
+        }
+        
+        .status-badge {
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .status-approved {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-conditional {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .status-pending {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+        
+        .status-rejected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .status-objection {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .application-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+        
+        .detail-label {
+            font-size: 0.8rem;
+            color: #6b7280;
+            font-weight: 500;
+        }
+        
+        .detail-value {
+            font-weight: 600;
+            color: #1f2937;
+        }
+        
+        .application-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-small {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-upload {
+            background: #10b981;
+            color: white;
+        }
+        
+        .btn-upload:hover {
+            background: #059669;
+        }
+        
+        .btn-view {
+            background: #6366f1;
+            color: white;
+        }
+        
+        .btn-view:hover {
+            background: #4f46e5;
+        }
+        
+        .btn-continue {
+            background: #f59e0b;
+            color: white;
+        }
+        
+        .btn-continue:hover {
+            background: #d97706;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+                margin: 1rem auto;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+            }
+            
+            .auth-tabs {
+                flex-direction: column;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>💼 Loan Application</h1>
+        <p class="subtitle">Apply for Personal, Home, or Business Loans</p>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">🤖 Loan Agent</a>
+            <a href="staff.html" class="nav-link">👩‍💼 Staff Login</a>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="auth-status-bar" id="authStatusBar">
+            <span class="status-text" id="statusText"></span>
+            <button class="clear-btn" onclick="clearAllSessions()">Clear Session</button>
+        </div>
+        
+        <div class="application-container">
+            <div class="application-header">
+                <h2>💰 Start Your Loan Application</h2>
+                <p>Get pre-approved in minutes with our AI-powered assessment</p>
+            </div>
+            
+            <!-- User Authentication Section -->
+            <div class="auth-section">
+                <div class="user-status" id="userStatus">
+                    <strong>✅ Logged in as: </strong><span id="userEmail"></span>
+                    <button onclick="logout()" style="float: right; background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">Logout</button>
+                </div>
+                
+                <div id="authContainer">
+                    <div class="auth-tabs">
+                        <div class="auth-tab active" onclick="switchAuthTab('login')">Login</div>
+                        <div class="auth-tab" onclick="switchAuthTab('register')">Register</div>
+                    </div>
+                    
+                    <div class="alert alert-error" id="authError"></div>
+                    <div class="alert alert-success" id="authSuccess"></div>
+                    
+                    <!-- Login Form -->
+                    <form class="auth-form active" id="loginForm">
+                        <div class="form-group">
+                            <label for="loginEmail">Email Address</label>
+                            <input type="email" id="loginEmail" required placeholder="your.email@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" required placeholder="Enter your password">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn-primary">Login to Continue</button>
+                        </div>
+                    </form>
+                    
+                    <!-- Register Form -->
+                    <form class="auth-form" id="registerForm">
+                        <div class="form-group">
+                            <label for="regFullName">Full Name</label>
+                            <input type="text" id="regFullName" required placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="regEmail">Email Address</label>
+                            <input type="email" id="regEmail" required placeholder="your.email@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="regPhone">Phone Number</label>
+                            <input type="tel" id="regPhone" required placeholder="+1 (555) 123-4567">
+                        </div>
+                        <div class="form-group">
+                            <label for="regPassword">Password</label>
+                            <input type="password" id="regPassword" required placeholder="Create a strong password">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn-primary">Create Account & Continue</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Loan Application Section -->
+            <div id="loanApplicationSection" style="display: none;">
+                <div class="form-section">
+                    <!-- Application Tabs -->
+                    <div class="application-tabs">
+                        <div class="app-tab active" onclick="switchAppTab('newApplication')">
+                            📝 New Application
+                        </div>
+                        <div class="app-tab" onclick="switchAppTab('drafts')">
+                            💾 Drafts
+                        </div>
+                        <div class="app-tab" onclick="switchAppTab('history')">
+                            � History
+                        </div>
+                    </div>
+                    
+                    <!-- New Application Tab Content -->
+                    <div id="newApplicationTab" class="tab-content active">
+                        <h3 class="section-title">📋 New Loan Application</h3>
+                        
+                        <div class="alert alert-info" id="applicationInfo"></div>
+                        <div class="alert alert-error" id="applicationError"></div>
+                        <div class="alert alert-success" id="applicationSuccess"></div>
+                        
+                        <form id="loanApplicationForm">
+                            <!-- Personal Details Section -->
+                            <div class="section-title">👤 Personal Details</div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="fullName">Full Name *</label>
+                                    <input type="text" id="fullName" required placeholder="John Doe">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="dateOfBirth">Date of Birth *</label>
+                                    <input type="date" id="dateOfBirth" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="gender">Gender *</label>
+                                    <select id="gender" required>
+                                        <option value="">Select Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Prefer not to say">Prefer not to say</option>
+                                        <option value="Attack helicopter">Attack helicopter</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="maritalStatus">Marital Status *</label>
+                                    <select id="maritalStatus" required>
+                                        <option value="">Select Status</option>
+                                        <option value="Single">Single</option>
+                                        <option value="Married">Married</option>
+                                        <option value="Divorced">Divorced</option>
+                                        <option value="Widowed">Widowed</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="nationality">Nationality *</label>
+                                    <input type="text" id="nationality" required placeholder="Indian" value="Indian">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="contactNumber">Contact Number *</label>
+                                    <input type="tel" id="contactNumber" required placeholder="+91 9876543210">
+                                </div>
+                            </div>
+
+                            <!-- Employment & Income Details Section -->
+                            <div class="section-title">💼 Employment & Income Details</div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="employmentType">Employment Type *</label>
+                                    <select id="employmentType" required>
+                                        <option value="">Select Employment Type</option>
+                                        <option value="Salaried">Salaried</option>
+                                        <option value="Self-employed">Self-employed</option>
+                                        <option value="Business Owner">Business Owner</option>
+                                        <option value="Freelancer">Freelancer</option>
+                                        <option value="Retired">Retired</option>
+                                        <option value="Student">Student</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="employerName">Name of Employer or Business *</label>
+                                    <input type="text" id="employerName" required placeholder="ABC Corporation / Own Business">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="annualIncome">Annual Income (₹) *</label>
+                                    <input type="number" id="annualIncome" required min="0" 
+                                           placeholder="500000" title="Enter amount in Rupees">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="existingLoans">Existing Loans and EMIs (if any) *</label>
+                                    <textarea id="existingLoans" placeholder="Details of existing loans, EMIs, credit card debts. Write 'None' if no existing loans."></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Loan Specific Details Section -->
+                            <div class="section-title">🏠 Loan Specific Details</div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="loanType">Type of Loan Needed *</label>
+                                    <select id="loanType" required>
+                                        <option value="">Select Loan Type</option>
+                                        <option value="Home loan">Home Loan</option>
+                                        <option value="Educational loan">Educational Loan</option>
+                                        <option value="Car loan">Car Loan</option>
+                                        <option value="Business Loan">Business Loan</option>
+                                        <option value="Personal loan">Personal Loan</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="loanAmount">Amount of Loan Required (₹) *</label>
+                                    <input type="number" id="loanAmount" required min="50000" max="100000000" 
+                                           placeholder="1000000" title="Enter amount in Rupees">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="loanTenure">Tenure (Years) *</label>
+                                    <select id="loanTenure" required>
+                                        <option value="">Select Tenure</option>
+                                        <option value="1">1 Year</option>
+                                        <option value="2">2 Years</option>
+                                        <option value="3">3 Years</option>
+                                        <option value="5">5 Years</option>
+                                        <option value="7">7 Years</option>
+                                        <option value="10">10 Years</option>
+                                        <option value="15">15 Years</option>
+                                        <option value="20">20 Years</option>
+                                        <option value="25">25 Years</option>
+                                        <option value="30">30 Years</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="loanPurpose">Purpose of Loan *</label>
+                                    <textarea id="loanPurpose" required 
+                                             placeholder="Describe the specific purpose of this loan in detail..."></textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="preferredEmi">Preferred EMI (₹)</label>
+                                    <input type="number" id="preferredEmi" min="1000" 
+                                           placeholder="25000" title="Your preferred monthly EMI amount">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="cibilScore">CIBIL Score *</label>
+                                    <input type="number" id="cibilScore" required min="300" max="900" 
+                                           placeholder="750" title="Your credit score (300-900)">
+                                </div>
+                            </div>
+                            
+                            <div class="form-section" style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin: 1rem 0;">
+                                <p style="margin: 0; color: #6c757d; text-align: center;">
+                                    <strong>🔒 Secure Application:</strong> Your data is encrypted and processed using Watson AI for instant eligibility assessment.
+                                </p>
+                            </div>
+                            
+                            <button type="submit" class="btn-primary" id="submitApplicationBtn">
+                                🚀 Submit Application for AI Pre-Approval
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- Drafts Tab Content -->
+                    <div id="draftsTab" class="tab-content">
+                        <h3 class="section-title">💾 Application Drafts</h3>
+                        <div id="draftsContainer">
+                            <div class="empty-state">
+                                <div style="text-align: center; padding: 3rem; color: #6c757d;">
+                                    <div style="font-size: 4rem; margin-bottom: 1rem;">📋</div>
+                                    <h4>No Drafts Found</h4>
+                                    <p>Pre-approved applications will appear here for document upload.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- History Tab Content -->
+                    <div id="historyTab" class="tab-content">
+                        <h3 class="section-title">📊 Application History</h3>
+                        <div id="historyContainer">
+                            <div class="empty-state">
+                                <div style="text-align: center; padding: 3rem; color: #6c757d;">
+                                    <div style="font-size: 4rem; margin-bottom: 1rem;">📈</div>
+                                    <h4>No Applications Found</h4>
+                                    <p>Your submitted loan applications will appear here.</p>
+                                    <button onclick="switchAppTab('newApplication')" class="btn-primary" style="margin-top: 1rem; width: auto; padding: 0.8rem 2rem;">
+                                        Apply for Your First Loan
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+        
+        // Immediately clear staff sessions when page loads (before checking auth)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Clear staff sessions aggressively on page load
+            clearStaffSession();
+            // Wait a moment then check auth status
+            setTimeout(checkAuthStatus, 500);
+        });
+        
+        // Also clear on page visibility change (when user returns to tab)
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                clearStaffSession();
+                setTimeout(checkAuthStatus, 200);
+            }
+        });
+        
+        function switchAuthTab(tab) {
+            // Update tab buttons
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update forms
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+            document.getElementById(tab + 'Form').classList.add('active');
+        }
+        
+        function showAlert(message, type, container = 'auth') {
+            const alertId = container + (type === 'error' ? 'Error' : type === 'success' ? 'Success' : 'Info');
+            const alert = document.getElementById(alertId);
+            alert.textContent = message;
+            alert.style.display = 'block';
+            
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000);
+        }
+        
+        function checkAuthStatus() {
+            // Automatically clear any staff session when accessing user interface
+            clearStaffSession();
+            
+            // Check user session with server
+            fetch('/user-auth-status', {
+                credentials: 'include' // Include cookies for session management
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.logged_in) {
+                        currentUser = { email: data.email };
+                        showUserLoggedIn();
+                        // Hide any auth warnings since we've cleared conflicts
+                        hideAuthWarning();
+                    } else {
+                        // Clear local storage if server session is invalid
+                        localStorage.removeItem('currentUser');
+                        hideAuthWarning();
+                    }
+                })
+                .catch(() => {
+                    // Fallback to localStorage for demo
+                    const savedUser = localStorage.getItem('currentUser');
+                    if (savedUser) {
+                        currentUser = JSON.parse(savedUser);
+                        showUserLoggedIn();
+                    }
+                    hideAuthWarning();
+                });
+        }
+        
+        function checkConflictingSessions() {
+            // Check if staff is logged in
+            fetch('/admin-dashboard')
+                .then(response => {
+                    if (response.ok) {
+                        showAuthWarning('⚠️ Staff session detected. You are currently logged in as admin staff.');
+                    }
+                })
+                .catch(() => {});
+        }
+        
+        function showAuthWarning(message) {
+            document.getElementById('statusText').textContent = message;
+            document.getElementById('authStatusBar').classList.add('show');
+        }
+        
+        function clearAllSessions() {
+            // Clear all sessions and localStorage
+            localStorage.clear();
+            fetch('/clear-all-sessions', { 
+                method: 'POST',
+                credentials: 'include'
+            })
+                .then(() => {
+                    location.reload();
+                })
+                .catch(() => location.reload());
+        }
+        
+        function clearStaffSession() {
+            // Clear staff session when user logs in - more aggressive approach
+            Promise.all([
+                fetch('/clear-staff-session', { 
+                    method: 'POST',
+                    credentials: 'include'
+                }).catch(() => {}),
+                fetch('/admin-logout', { 
+                    method: 'POST',
+                    credentials: 'include'
+                }).catch(() => {}),
+                fetch('/logout', { 
+                    method: 'POST',
+                    credentials: 'include'
+                }).catch(() => {})
+            ]).then(() => {
+                // Force clear any staff-related localStorage
+                Object.keys(localStorage).forEach(key => {
+                    if (key.includes('staff') || key.includes('admin')) {
+                        localStorage.removeItem(key);
+                    }
+                });
+            });
+        }
+        
+        function hideAuthWarning() {
+            document.getElementById('authStatusBar').classList.remove('show');
+        }
+        
+        function showUserLoggedIn() {
+            document.getElementById('authContainer').style.display = 'none';
+            document.getElementById('userStatus').classList.add('show');
+            document.getElementById('userEmail').textContent = currentUser.email;
+            document.getElementById('loanApplicationSection').style.display = 'block';
+            
+            // Load user data when logged in
+            loadDrafts();
+            loadHistory();
+        }
+        
+        function switchAppTab(tabName) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.app-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Add active class to selected tab
+            event.target.classList.add('active');
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            
+            // Load data for specific tabs
+            if (tabName === 'drafts') {
+                loadDrafts();
+            } else if (tabName === 'history') {
+                loadHistory();
+            }
+        }
+        
+        function loadDrafts() {
+            const draftsContainer = document.getElementById('draftsContainer');
+            const drafts = JSON.parse(localStorage.getItem('applicationDrafts') || '[]');
+            const userDrafts = drafts.filter(draft => draft.userEmail === currentUser.email);
+            
+            if (userDrafts.length === 0) {
+                draftsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div style="text-align: center; padding: 3rem; color: #6c757d;">
+                            <div style="font-size: 4rem; margin-bottom: 1rem;">💾</div>
+                            <h4>No Drafts Found</h4>
+                            <p>Pre-approved applications will appear here for document upload.</p>
+                            <button onclick="switchAppTab('newApplication')" class="btn-primary" style="margin-top: 1rem; width: auto; padding: 0.8rem 2rem;">
+                                Create New Application
+                            </button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            let draftsHTML = '';
+            userDrafts.forEach(draft => {
+                const statusClass = getStatusClass(draft.status);
+                const formattedDate = new Date(draft.savedAt).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                draftsHTML += `
+                    <div class="application-card">
+                        <div class="application-header">
+                            <div class="application-id">📋 ${draft.applicationId}</div>
+                            <div class="status-badge ${statusClass}">${draft.status.replace('_', ' ')}</div>
+                        </div>
+                        
+                        <div class="application-details">
+                            <div class="detail-item">
+                                <div class="detail-label">Loan Type</div>
+                                <div class="detail-value">${draft.formData['loan-type']}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Amount</div>
+                                <div class="detail-value">₹${parseInt(draft.formData['loan-amount']).toLocaleString()}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Saved On</div>
+                                <div class="detail-value">${formattedDate}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Status</div>
+                                <div class="detail-value">${draft.status === 'APPROVED' ? 'Ready for Documents' : 'Conditional Approval'}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="application-actions">
+                            <button onclick="uploadDocumentsForDraft('${draft.applicationId}', '${draft.requiredDocuments}')" class="btn-small btn-upload">
+                                📎 Upload Documents
+                            </button>
+                            <button onclick="viewDraftDetails('${draft.applicationId}')" class="btn-small btn-view">
+                                👁️ View Details
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            draftsContainer.innerHTML = draftsHTML;
+        }
+        
+        function loadHistory() {
+            const historyContainer = document.getElementById('historyContainer');
+            
+            // Get applications from server
+            fetch('/user-applications', {
+                credentials: 'include' // Include cookies for session management
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.applications.length > 0) {
+                        let historyHTML = '';
+                        data.applications.forEach(app => {
+                            const statusClass = getStatusClass(app.status || app.eligibility_status);
+                            const formattedDate = new Date(app.created_at).toLocaleDateString('en-US', {
+                                year: 'numeric',
+                                month: 'short',
+                                day: 'numeric'
+                            });
+                            
+                            historyHTML += `
+                                <div class="application-card">
+                                    <div class="application-header">
+                                        <div class="application-id">📋 ${app.application_id}</div>
+                                        <div class="status-badge ${statusClass}">${(app.status || app.eligibility_status).replace('_', ' ')}</div>
+                                    </div>
+                                    
+                                    <div class="application-details">
+                                        <div class="detail-item">
+                                            <div class="detail-label">Loan Type</div>
+                                            <div class="detail-value">${app.loan_type}</div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">Amount</div>
+                                            <div class="detail-value">₹${parseInt(app.loan_amount).toLocaleString()}</div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">Applied On</div>
+                                            <div class="detail-value">${formattedDate}</div>
+                                        </div>
+                                        <div class="detail-item">
+                                            <div class="detail-label">Current Status</div>
+                                            <div class="detail-value">${getStatusText(app.status || app.eligibility_status)}</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="application-actions">
+                                        <button onclick="viewApplicationDetails('${app.application_id}')" class="btn-small btn-view">
+                                            👁️ View Details
+                                        </button>
+                                        ${((app.status === 'APPROVED' || app.status === 'CONDITIONALLY_APPROVED') || 
+                                          (app.eligibility_status === 'APPROVED' || app.eligibility_status === 'CONDITIONALLY_APPROVED')) && 
+                                          app.status !== 'OBJECTION_RAISED' ? 
+                                            `<button onclick="uploadDocumentsForApplication('${app.application_id}')" class="btn-small btn-upload">📎 Upload Documents</button>` : ''
+                                        }
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        
+                        historyContainer.innerHTML = historyHTML;
+                    } else {
+                        historyContainer.innerHTML = `
+                            <div class="empty-state">
+                                <div style="text-align: center; padding: 3rem; color: #6c757d;">
+                                    <div style="font-size: 4rem; margin-bottom: 1rem;">📈</div>
+                                    <h4>No Applications Found</h4>
+                                    <p>Your submitted loan applications will appear here.</p>
+                                    <button onclick="switchAppTab('newApplication')" class="btn-primary" style="margin-top: 1rem; width: auto; padding: 0.8rem 2rem;">
+                                        Apply for Your First Loan
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading history:', error);
+                    historyContainer.innerHTML = `
+                        <div class="empty-state">
+                            <div style="text-align: center; padding: 3rem; color: #dc2626;">
+                                <div style="font-size: 4rem; margin-bottom: 1rem;">⚠️</div>
+                                <h4>Error Loading History</h4>
+                                <p>Unable to fetch your application history. Please try again.</p>
+                                <button onclick="loadHistory()" class="btn-primary" style="margin-top: 1rem; width: auto; padding: 0.8rem 2rem;">
+                                    Retry
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+        }
+        
+        function getStatusClass(status) {
+            switch(status?.toLowerCase()) {
+                case 'approved': return 'status-approved';
+                case 'conditionally_approved': return 'status-conditional';
+                case 'rejected': return 'status-rejected';
+                case 'objection_raised': return 'status-objection';
+                default: return 'status-pending';
+            }
+        }
+        
+        function getStatusText(status) {
+            switch(status?.toLowerCase()) {
+                case 'approved': return 'Approved - Upload Documents';
+                case 'conditionally_approved': return 'Conditional Approval';
+                case 'rejected': return 'Not Approved';
+                case 'pending': return 'Under Review';
+                case 'objection_raised': return 'Action Required - See Drafts';
+                default: return 'Processing';
+            }
+        }
+        
+        function uploadDocumentsForDraft(applicationId, requiredDocs) {
+            // Switch to new application tab and show upload section
+            switchAppTab('newApplication');
+            setTimeout(() => {
+                showDocumentUploadSection(applicationId, requiredDocs);
+                document.getElementById('newApplicationTab').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+        
+        function uploadDocumentsForApplication(applicationId) {
+            // Get application details and show upload section
+            fetch(`/application-details/${applicationId}`, {
+                credentials: 'include' // Include cookies for session management
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const requiredDocs = data.application.required_documents || 'Identity Proof, Income Proof, Address Proof';
+                        uploadDocumentsForDraft(applicationId, requiredDocs);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error getting application details:', error);
+                    showAlert('Error loading application details', 'error', 'application');
+                });
+        }
+        
+        function viewDraftDetails(applicationId) {
+            const drafts = JSON.parse(localStorage.getItem('applicationDrafts') || '[]');
+            const draft = drafts.find(d => d.applicationId === applicationId);
+            
+            if (draft) {
+                alert(`Application Details for ${applicationId}:
+                
+Loan Type: ${draft.formData['loan-type']}
+Amount: ₹${parseInt(draft.formData['loan-amount']).toLocaleString()}
+Status: ${draft.status}
+Required Documents: ${draft.requiredDocuments}
+Saved: ${new Date(draft.savedAt).toLocaleString()}`);
+            }
+        }
+        
+        function viewApplicationDetails(applicationId) {
+            // Fetch and display application details
+            fetch(`/application-details/${applicationId}`, {
+                credentials: 'include' // Include cookies for session management
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const app = data.application;
+                        alert(`Application Details for ${applicationId}:
+                        
+Applicant: ${app.full_name}
+Loan Type: ${app.loan_type}
+Amount: ₹${parseInt(app.loan_amount).toLocaleString()}
+Status: ${app.eligibility_status}
+Applied: ${new Date(app.created_at).toLocaleString()}
+Required Documents: ${app.required_documents || 'N/A'}`);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading application details:', error);
+                    showAlert('Error loading application details', 'error', 'application');
+                });
+        }
+        
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            document.getElementById('authContainer').style.display = 'block';
+            document.getElementById('userStatus').classList.remove('show');
+            document.getElementById('loanApplicationSection').style.display = 'none';
+        }
+        
+        // Login Form Handler
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            try {
+                const response = await fetch('/user-login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include', // Include cookies for session management
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Clear staff session when user logs in
+                    clearStaffSession();
+                    
+                    currentUser = { email: email };
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    showAlert('Login successful!', 'success');
+                    setTimeout(showUserLoggedIn, 1000);
+                } else {
+                    showAlert(data.error || 'Login failed', 'error');
+                }
+            } catch (error) {
+                showAlert('Network error. Please try again.', 'error');
+            }
+        });
+        
+        // Register Form Handler
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const fullName = document.getElementById('regFullName').value;
+            const email = document.getElementById('regEmail').value;
+            const phone = document.getElementById('regPhone').value;
+            const password = document.getElementById('regPassword').value;
+            
+            try {
+                const response = await fetch('/user-register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include', // Include cookies for session management
+                    body: JSON.stringify({ fullName, email, phone, password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Clear staff session when user registers
+                    clearStaffSession();
+                    
+                    currentUser = { email: email };
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    showAlert('Registration successful!', 'success');
+                    setTimeout(showUserLoggedIn, 1000);
+                } else {
+                    showAlert(data.error || 'Registration failed', 'error');
+                }
+            } catch (error) {
+                showAlert('Network error. Please try again.', 'error');
+            }
+        });
+        
+        // Loan Application Form Handler
+        document.getElementById('loanApplicationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitApplicationBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = '🔄 Processing Application with Watson AI...';
+            
+            const formData = {
+                'full-name': document.getElementById('fullName').value,
+                'date-of-birth': document.getElementById('dateOfBirth').value,
+                'gender': document.getElementById('gender').value,
+                'marital-status': document.getElementById('maritalStatus').value,
+                'nationality': document.getElementById('nationality').value,
+                'contact-number': document.getElementById('contactNumber').value,
+                'employment-type': document.getElementById('employmentType').value,
+                'employer-name': document.getElementById('employerName').value,
+                'annual-income': document.getElementById('annualIncome').value,
+                'existing-loans': document.getElementById('existingLoans').value || 'None',
+                'loan-type': document.getElementById('loanType').value,
+                'loan-amount': document.getElementById('loanAmount').value,
+                'loan-tenure': document.getElementById('loanTenure').value,
+                'loan-purpose': document.getElementById('loanPurpose').value,
+                'preferred-emi': document.getElementById('preferredEmi').value || '',
+                'cibil-score': document.getElementById('cibilScore').value
+            };
+            
+            try {
+                const response = await fetch('/apply-comprehensive-loan', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include', // Include cookies for session management
+                    body: JSON.stringify(formData)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const applicationId = data.application_id;
+                    const eligibilityStatus = data.eligibility_status;
+                    
+                    // Show success message with status
+                    let statusMessage = '';
+                    let alertType = 'success';
+                    
+                    if (eligibilityStatus === 'APPROVED') {
+                        statusMessage = `🎉 Congratulations! Your application ${applicationId} is PRE-APPROVED! 
+                        
+Next Steps:
+• Check your email for document requirements
+• Upload required documents below
+• Wait for final verification`;
+                        
+                        // Show document upload section for approved applications
+                        showDocumentUploadSection(applicationId, data.required_documents);
+                        
+                    } else if (eligibilityStatus === 'CONDITIONALLY_APPROVED') {
+                        statusMessage = `⚠️ Your application ${applicationId} is CONDITIONALLY APPROVED! 
+                        
+Assessment: ${data.eligibility_reason}
+
+Required Documents: ${data.required_documents}
+
+Please check your email for detailed instructions.`;
+                        alertType = 'info';
+                        
+                        // Show document upload section for conditionally approved applications
+                        showDocumentUploadSection(applicationId, data.required_documents);
+                        
+                    } else {
+                        statusMessage = `📋 Application ${applicationId} submitted for review.
+                        
+Assessment: ${data.eligibility_reason}
+
+Please check your email for next steps and recommendations.`;
+                        alertType = 'info';
+                    }
+                    
+                    showAlert(statusMessage, alertType, 'application');
+                    
+                    // Save application draft for approved/conditionally approved
+                    if (eligibilityStatus === 'APPROVED' || eligibilityStatus === 'CONDITIONALLY_APPROVED') {
+                        saveApplicationDraft(applicationId, formData, eligibilityStatus, data.required_documents);
+                    }
+                    
+                    // Reset form
+                    document.getElementById('loanApplicationForm').reset();
+                    
+                } else {
+                    showAlert(data.error || 'Application submission failed', 'error', 'application');
+                }
+            } catch (error) {
+                showAlert('Network error. Please try again.', 'error', 'application');
+                console.error('Application error:', error);
+            }
+            
+            submitBtn.disabled = false;
+            submitBtn.textContent = '🚀 Submit Application for AI Pre-Approval';
+        });
+        
+        // Save application draft to localStorage
+        function saveApplicationDraft(applicationId, formData, status, requiredDocs) {
+            const draft = {
+                applicationId: applicationId,
+                formData: formData,
+                status: status,
+                requiredDocuments: requiredDocs,
+                savedAt: new Date().toISOString(),
+                userEmail: currentUser.email
+            };
+            
+            let drafts = JSON.parse(localStorage.getItem('applicationDrafts') || '[]');
+            drafts.push(draft);
+            localStorage.setItem('applicationDrafts', JSON.stringify(drafts));
+        }
+        
+        // Show document upload section for approved applications
+        function showDocumentUploadSection(applicationId, requiredDocs) {
+            // Create document type mapping
+            const docTypeMapping = {
+                'Identity Proof': ['Aadhaar Card', 'PAN Card', 'Passport Size Photos'],
+                'Income Proof': ['Bank Statements (6 months)', 'Salary Slips (3 months)', 'Form 16', 'ITR (2 years)'],
+                'Address Proof': ['Aadhaar Card', 'Bank Statements (6 months)', 'Property Documents'],
+                'PAN Card': ['PAN Card'],
+                'Aadhaar Card': ['Aadhaar Card'],
+                'Salary': ['Salary Slips (3 months)', 'Employment Certificate', 'Form 16'],
+                'Employment Certificate': ['Employment Certificate'],
+                'Bank Statements': ['Bank Statements (6 months)'],
+                'Form 16': ['Form 16'],
+                'Business Registration': ['Business Registration'],
+                'ITR': ['ITR (2 years)'],
+                'Property Documents': ['Property Documents']
+            };
+            
+            // Generate options based on required documents
+            let docOptions = '<option value="">Select Document Type</option>';
+            const requiredDocsList = requiredDocs.split(', ').map(doc => doc.trim());
+            const allAllowedDocs = new Set();
+            
+            requiredDocsList.forEach(requiredDoc => {
+                if (docTypeMapping[requiredDoc]) {
+                    docTypeMapping[requiredDoc].forEach(docType => {
+                        allAllowedDocs.add(docType);
+                    });
+                } else {
+                    // If exact match not found, try partial matching
+                    Object.keys(docTypeMapping).forEach(key => {
+                        if (requiredDoc.toLowerCase().includes(key.toLowerCase()) || key.toLowerCase().includes(requiredDoc.toLowerCase())) {
+                            docTypeMapping[key].forEach(docType => {
+                                allAllowedDocs.add(docType);
+                            });
+                        }
+                    });
+                }
+            });
+            
+            // Convert set to sorted array and create options
+            Array.from(allAllowedDocs).sort().forEach(docType => {
+                docOptions += `<option value="${docType}">${docType}</option>`;
+            });
+            
+            // Add "Other" option at the end
+            docOptions += '<option value="Other">Other</option>';
+            
+            const uploadSection = document.createElement('div');
+            uploadSection.id = 'documentUploadSection';
+            uploadSection.innerHTML = `
+                <div class="form-section" style="background: #f0f9ff; border: 2px solid #0ea5e9; border-radius: 12px; margin-top: 2rem;">
+                    <h3 class="section-title" style="color: #0c4a6e;">📄 Document Upload - Application ${applicationId}</h3>
+                    
+                    <div class="alert alert-info" style="display: block; margin-bottom: 1rem;">
+                        <strong>Required Documents:</strong><br>
+                        ${requiredDocs.split(', ').map(doc => `• ${doc}`).join('<br>')}
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="documentType">Document Type</label>
+                            <select id="documentType" required>
+                                ${docOptions}
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="documentFile">Upload Document</label>
+                            <input type="file" id="documentFile" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" required>
+                            <small style="color: #6c757d; font-size: 0.9rem;">
+                                Supported formats: PDF, JPG, PNG, DOC, DOCX (Max 5MB)
+                            </small>
+                        </div>
+                    </div>
+                    
+                    <button type="button" onclick="uploadDocument('${applicationId}')" class="btn-primary" id="uploadDocBtn">
+                        📎 Upload Document
+                    </button>
+                    
+                    <div class="alert alert-success" id="uploadSuccess" style="display: none; margin-top: 1rem;"></div>
+                    <div class="alert alert-error" id="uploadError" style="display: none; margin-top: 1rem;"></div>
+                </div>
+            `;
+            
+            // Insert after the loan application form
+            const loanSection = document.getElementById('loanApplicationSection');
+            loanSection.appendChild(uploadSection);
+        }
+        
+        // Upload document function
+        async function uploadDocument(applicationId) {
+            const documentType = document.getElementById('documentType').value;
+            const documentFile = document.getElementById('documentFile').files[0];
+            
+            if (!documentType || !documentFile) {
+                document.getElementById('uploadError').textContent = 'Please select document type and file';
+                document.getElementById('uploadError').style.display = 'block';
+                return;
+            }
+            
+            // Check file size (5MB limit)
+            if (documentFile.size > 5 * 1024 * 1024) {
+                document.getElementById('uploadError').textContent = 'File size must be less than 5MB';
+                document.getElementById('uploadError').style.display = 'block';
+                return;
+            }
+            
+            const uploadBtn = document.getElementById('uploadDocBtn');
+            uploadBtn.disabled = true;
+            uploadBtn.textContent = '📤 Uploading...';
+            
+            const formData = new FormData();
+            formData.append('application_id', applicationId);
+            formData.append('document_type', documentType);
+            formData.append('document', documentFile);
+            
+            try {
+                const response = await fetch('/upload-documents', {
+                    method: 'POST',
+                    credentials: 'include', // Include cookies for session management
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('uploadSuccess').textContent = 
+                        `✅ ${documentType} uploaded successfully! Admin has been notified.`;
+                    document.getElementById('uploadSuccess').style.display = 'block';
+                    document.getElementById('uploadError').style.display = 'none';
+                    
+                    // Reset upload form
+                    document.getElementById('documentType').value = '';
+                    document.getElementById('documentFile').value = '';
+                    
+                    // Send email notification to admin
+                    notifyAdminOfDocumentUpload(applicationId, documentType, currentUser.email);
+                    
+                } else {
+                    document.getElementById('uploadError').textContent = data.error || 'Upload failed';
+                    document.getElementById('uploadError').style.display = 'block';
+                }
+            } catch (error) {
+                document.getElementById('uploadError').textContent = 'Network error during upload';
+                document.getElementById('uploadError').style.display = 'block';
+                console.error('Upload error:', error);
+            }
+            
+            uploadBtn.disabled = false;
+            uploadBtn.textContent = '📎 Upload Document';
+        }
+        
+        // Notify admin of document upload
+        async function notifyAdminOfDocumentUpload(applicationId, documentType, userEmail) {
+            try {
+                await fetch('/notify-admin-document-upload', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include', // Include cookies for session management
+                    body: JSON.stringify({
+                        application_id: applicationId,
+                        document_type: documentType,
+                        user_email: userEmail
+                    })
+                });
+            } catch (error) {
+                console.error('Admin notification error:', error);
+            }
+        }
+    </script>
+</body>
+</html>

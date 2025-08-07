@@ -1,0 +1,119 @@
+2025-08-06 23:00:09,372 - INFO - Created users CSV file: data/users/users.csv
+2025-08-06 23:00:09,372 - INFO - Created applications CSV file: data/applications/loan_applications.csv
+2025-08-06 23:00:09,372 - INFO - Created admin_users CSV file: data/admin/admin_users.csv
+2025-08-06 23:00:09,372 - INFO - Created notifications CSV file: data/notifications/notifications.csv
+2025-08-06 23:00:09,372 - INFO - Created default admin user: admin@bank.com / admin123
+2025-08-06 23:00:09,372 - INFO - Starting IBM Bank Loan Agent Server...
+2025-08-06 23:00:09,372 - INFO - Features: Multi-user authentication, AI loan analysis, Admin panel, File uploads
+2025-08-06 23:00:09,380 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2025-08-06 23:00:09,380 - INFO - [33mPress CTRL+C to quit[0m
+2025-08-06 23:00:18,207 - INFO - 127.0.0.1 - - [06/Aug/2025 23:00:18] "GET /?id=32ca911e-49b0-46de-988b-4a0386f9d22f&vscodeBrowserReqId=1754501418194 HTTP/1.1" 200 -
+2025-08-06 23:00:18,226 - INFO - 127.0.0.1 - - [06/Aug/2025 23:00:18] "[31m[1mGET /api/user HTTP/1.1[0m" 401 -
+2025-08-06 23:00:46,135 - INFO - 127.0.0.1 - - [06/Aug/2025 23:00:46] "GET / HTTP/1.1" 200 -
+2025-08-06 23:00:46,389 - INFO - 127.0.0.1 - - [06/Aug/2025 23:00:46] "[31m[1mGET /api/user HTTP/1.1[0m" 401 -
+2025-08-06 23:00:46,408 - INFO - 127.0.0.1 - - [06/Aug/2025 23:00:46] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-08-06 23:01:04,513 - INFO - 127.0.0.1 - - [06/Aug/2025 23:01:04] "GET / HTTP/1.1" 200 -
+2025-08-06 23:01:04,603 - INFO - 127.0.0.1 - - [06/Aug/2025 23:01:04] "[31m[1mGET /api/user HTTP/1.1[0m" 401 -
+2025-08-06 23:02:17,195 - INFO - Added record to users CSV
+2025-08-06 23:02:17,195 - INFO - New user registered: raghavdharwal07@gmail.com
+2025-08-06 23:02:17,196 - INFO - 127.0.0.1 - - [06/Aug/2025 23:02:17] "[35m[1mPOST /api/register HTTP/1.1[0m" 201 -
+2025-08-06 23:02:18,401 - INFO - User login: raghavdharwal07@gmail.com
+2025-08-06 23:02:18,407 - INFO - 127.0.0.1 - - [06/Aug/2025 23:02:18] "POST /api/login HTTP/1.1" 200 -
+2025-08-06 23:02:25,131 - INFO - User login: raghavdharwal07@gmail.com
+2025-08-06 23:02:25,132 - INFO - 127.0.0.1 - - [06/Aug/2025 23:02:25] "POST /api/login HTTP/1.1" 200 -
+2025-08-06 23:02:52,840 - INFO - User login: raghavdharwal07@gmail.com
+2025-08-06 23:02:52,843 - INFO - 127.0.0.1 - - [06/Aug/2025 23:02:52] "POST /api/login HTTP/1.1" 200 -
+2025-08-06 23:03:00,579 - INFO - 127.0.0.1 - - [06/Aug/2025 23:03:00] "[31m[1mPOST /api/register HTTP/1.1[0m" 400 -
+2025-08-06 23:03:04,922 - INFO - User login: raghavdharwal07@gmail.com
+2025-08-06 23:03:04,924 - INFO - 127.0.0.1 - - [06/Aug/2025 23:03:04] "POST /api/login HTTP/1.1" 200 -
+2025-08-06 23:03:05,213 - INFO - User login: raghavdharwal07@gmail.com
+2025-08-06 23:03:05,214 - INFO - 127.0.0.1 - - [06/Aug/2025 23:03:05] "POST /api/login HTTP/1.1" 200 -
+2025-08-06 23:03:19,537 - INFO - Admin login: admin@bank.com
+2025-08-06 23:03:19,539 - INFO - 127.0.0.1 - - [06/Aug/2025 23:03:19] "POST /api/admin/login HTTP/1.1" 200 -
+2025-08-06 23:03:19,543 - INFO - 127.0.0.1 - - [06/Aug/2025 23:03:19] "GET /api/admin/applications HTTP/1.1" 200 -
+2025-08-06 23:03:29,883 - INFO - 127.0.0.1 - - [06/Aug/2025 23:03:29] "GET /api/admin/applications HTTP/1.1" 200 -
+2025-08-06 23:03:33,474 - INFO - User login: raghavdharwal07@gmail.com
+2025-08-06 23:03:33,479 - INFO - 127.0.0.1 - - [06/Aug/2025 23:03:33] "POST /api/login HTTP/1.1" 200 -
+2025-08-06 23:03:39,607 - INFO - 127.0.0.1 - - [06/Aug/2025 23:03:39] "POST /api/logout HTTP/1.1" 200 -
+2025-08-06 23:03:45,117 - INFO - Admin login: admin@bank.com
+2025-08-06 23:03:45,118 - INFO - 127.0.0.1 - - [06/Aug/2025 23:03:45] "POST /api/admin/login HTTP/1.1" 200 -
+2025-08-06 23:03:45,130 - INFO - 127.0.0.1 - - [06/Aug/2025 23:03:45] "GET /api/admin/applications HTTP/1.1" 200 -
+2025-08-06 23:03:51,525 - INFO - 127.0.0.1 - - [06/Aug/2025 23:03:51] "POST /api/logout HTTP/1.1" 200 -
+2025-08-06 23:03:57,313 - INFO - User login: raghavdharwal07@gmail.com
+2025-08-06 23:03:57,314 - INFO - 127.0.0.1 - - [06/Aug/2025 23:03:57] "POST /api/login HTTP/1.1" 200 -
+2025-08-06 23:25:55,473 - INFO - User login: raghavdharwal07@gmail.com
+2025-08-06 23:25:55,475 - INFO - 127.0.0.1 - - [06/Aug/2025 23:25:55] "POST /api/login HTTP/1.1" 200 -
+2025-08-06 23:26:06,158 - INFO - 127.0.0.1 - - [06/Aug/2025 23:26:06] "POST /api/logout HTTP/1.1" 200 -
+2025-08-06 23:26:08,307 - INFO - User login: raghavdharwal07@gmail.com
+2025-08-06 23:26:08,309 - INFO - 127.0.0.1 - - [06/Aug/2025 23:26:08] "POST /api/login HTTP/1.1" 200 -
+2025-08-06 23:26:15,770 - INFO - 127.0.0.1 - - [06/Aug/2025 23:26:15] "GET /api/applications HTTP/1.1" 200 -
+2025-08-06 23:26:15,770 - INFO - 127.0.0.1 - - [06/Aug/2025 23:26:15] "GET /api/notifications HTTP/1.1" 200 -
+2025-08-06 23:27:52,382 - INFO - Added record to applications CSV
+2025-08-06 23:27:52,382 - INFO - Added record to notifications CSV
+2025-08-06 23:27:52,382 - INFO - Loan application submitted: adffc854-7a4c-4f78-a795-63255b788652 by raghavdharwal07@gmail.com
+2025-08-06 23:27:52,383 - INFO - 127.0.0.1 - - [06/Aug/2025 23:27:52] "[35m[1mPOST /api/loan/apply HTTP/1.1[0m" 201 -
+2025-08-06 23:27:52,387 - INFO - 127.0.0.1 - - [06/Aug/2025 23:27:52] "GET /api/applications HTTP/1.1" 200 -
+2025-08-06 23:28:32,232 - INFO - Added record to applications CSV
+2025-08-06 23:28:32,233 - INFO - Added record to notifications CSV
+2025-08-06 23:28:32,233 - INFO - Loan application submitted: 4b4b3655-f0f3-4f07-a4a3-fc930efb7df3 by raghavdharwal07@gmail.com
+2025-08-06 23:28:32,234 - INFO - 127.0.0.1 - - [06/Aug/2025 23:28:32] "[35m[1mPOST /api/loan/apply HTTP/1.1[0m" 201 -
+2025-08-06 23:28:32,241 - INFO - 127.0.0.1 - - [06/Aug/2025 23:28:32] "GET /api/applications HTTP/1.1" 200 -
+2025-08-06 23:28:55,417 - INFO - Added record to applications CSV
+2025-08-06 23:28:55,417 - INFO - Added record to notifications CSV
+2025-08-06 23:28:55,417 - INFO - Loan application submitted: 300594af-c0df-4ee8-bc20-0c5db7f4f1b6 by raghavdharwal07@gmail.com
+2025-08-06 23:28:55,418 - INFO - 127.0.0.1 - - [06/Aug/2025 23:28:55] "[35m[1mPOST /api/loan/apply HTTP/1.1[0m" 201 -
+2025-08-06 23:28:55,421 - INFO - 127.0.0.1 - - [06/Aug/2025 23:28:55] "GET /api/applications HTTP/1.1" 200 -
+2025-08-06 23:29:02,749 - INFO - 127.0.0.1 - - [06/Aug/2025 23:29:02] "POST /api/logout HTTP/1.1" 200 -
+2025-08-06 23:29:28,854 - INFO - User login: raghavdharwal07@gmail.com
+2025-08-06 23:29:28,860 - INFO - 127.0.0.1 - - [06/Aug/2025 23:29:28] "POST /api/login HTTP/1.1" 200 -
+2025-08-06 23:30:10,458 - INFO - 127.0.0.1 - - [06/Aug/2025 23:30:10] "POST /api/logout HTTP/1.1" 200 -
+2025-08-06 23:30:13,252 - INFO - Admin login: admin@bank.com
+2025-08-06 23:30:13,253 - INFO - 127.0.0.1 - - [06/Aug/2025 23:30:13] "POST /api/admin/login HTTP/1.1" 200 -
+2025-08-06 23:30:13,260 - INFO - 127.0.0.1 - - [06/Aug/2025 23:30:13] "GET /api/admin/applications HTTP/1.1" 200 -
+2025-08-06 23:31:37,123 - INFO - 127.0.0.1 - - [06/Aug/2025 23:31:37] "POST /api/logout HTTP/1.1" 200 -
+2025-08-06 23:31:39,464 - INFO - User login: raghavdharwal07@gmail.com
+2025-08-06 23:31:39,465 - INFO - 127.0.0.1 - - [06/Aug/2025 23:31:39] "POST /api/login HTTP/1.1" 200 -
+2025-08-06 23:31:42,315 - INFO - 127.0.0.1 - - [06/Aug/2025 23:31:42] "GET /api/applications HTTP/1.1" 200 -
+2025-08-06 23:31:42,316 - INFO - 127.0.0.1 - - [06/Aug/2025 23:31:42] "GET /api/notifications HTTP/1.1" 200 -
+2025-08-06 23:31:48,686 - INFO - 127.0.0.1 - - [06/Aug/2025 23:31:48] "POST /api/logout HTTP/1.1" 200 -
+2025-08-06 23:31:51,879 - INFO - Admin login: admin@bank.com
+2025-08-06 23:31:51,880 - INFO - 127.0.0.1 - - [06/Aug/2025 23:31:51] "POST /api/admin/login HTTP/1.1" 200 -
+2025-08-06 23:31:51,885 - INFO - 127.0.0.1 - - [06/Aug/2025 23:31:51] "GET /api/admin/applications HTTP/1.1" 200 -
+2025-08-06 23:32:09,027 - INFO - Updated applications CSV with 3 records
+2025-08-06 23:32:09,028 - INFO - Added record to notifications CSV
+2025-08-06 23:32:09,028 - INFO - Application 300594af-c0df-4ee8-bc20-0c5db7f4f1b6 reviewed by admin: approve
+2025-08-06 23:32:09,028 - INFO - 127.0.0.1 - - [06/Aug/2025 23:32:09] "POST /api/admin/applications/300594af-c0df-4ee8-bc20-0c5db7f4f1b6/review HTTP/1.1" 200 -
+2025-08-06 23:32:09,032 - INFO - 127.0.0.1 - - [06/Aug/2025 23:32:09] "GET /api/admin/applications HTTP/1.1" 200 -
+2025-08-06 23:32:14,997 - INFO - 127.0.0.1 - - [06/Aug/2025 23:32:14] "POST /api/logout HTTP/1.1" 200 -
+2025-08-06 23:32:19,623 - INFO - User login: raghavdharwal07@gmail.com
+2025-08-06 23:32:19,624 - INFO - 127.0.0.1 - - [06/Aug/2025 23:32:19] "POST /api/login HTTP/1.1" 200 -
+2025-08-06 23:32:26,415 - INFO - 127.0.0.1 - - [06/Aug/2025 23:32:26] "POST /api/logout HTTP/1.1" 200 -
+2025-08-06 23:32:28,580 - INFO - User login: raghavdharwal07@gmail.com
+2025-08-06 23:32:28,581 - INFO - 127.0.0.1 - - [06/Aug/2025 23:32:28] "POST /api/login HTTP/1.1" 200 -
+2025-08-06 23:32:30,063 - INFO - 127.0.0.1 - - [06/Aug/2025 23:32:30] "GET /api/applications HTTP/1.1" 200 -
+2025-08-06 23:32:30,064 - INFO - 127.0.0.1 - - [06/Aug/2025 23:32:30] "GET /api/notifications HTTP/1.1" 200 -
+2025-08-06 23:32:50,039 - INFO - Watson query: hi...
+2025-08-06 23:32:50,041 - INFO - 127.0.0.1 - - [06/Aug/2025 23:32:50] "POST /ask HTTP/1.1" 200 -
+2025-08-06 23:38:38,353 - INFO - Starting IBM Bank Loan Agent Server...
+2025-08-06 23:38:38,354 - INFO - Features: Multi-user authentication, AI loan analysis, Admin panel, File uploads
+2025-08-06 23:38:38,357 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2025-08-06 23:38:38,357 - INFO - [33mPress CTRL+C to quit[0m
+2025-08-06 23:39:03,761 - INFO - 127.0.0.1 - - [06/Aug/2025 23:39:03] "GET / HTTP/1.1" 200 -
+2025-08-06 23:39:03,876 - INFO - 127.0.0.1 - - [06/Aug/2025 23:39:03] "GET /api/user HTTP/1.1" 200 -
+2025-08-06 23:39:07,471 - ERROR - Failed to get Watson token: 400
+2025-08-06 23:39:07,474 - WARNING - Watson AI not configured, using fallback response
+2025-08-06 23:39:07,474 - INFO - Watson query: hi...
+2025-08-06 23:39:07,476 - INFO - 127.0.0.1 - - [06/Aug/2025 23:39:07] "POST /ask HTTP/1.1" 200 -
+2025-08-06 23:43:02,517 - INFO - 127.0.0.1 - - [06/Aug/2025 23:43:02] "[36mGET / HTTP/1.1[0m" 304 -
+2025-08-06 23:43:02,591 - INFO - 127.0.0.1 - - [06/Aug/2025 23:43:02] "GET /api/user HTTP/1.1" 200 -
+2025-08-06 23:43:26,122 - INFO - Starting IBM Bank Loan Agent Server...
+2025-08-06 23:43:26,122 - INFO - Features: Multi-user authentication, AI loan analysis, Admin panel, File uploads
+2025-08-06 23:43:26,127 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2025-08-06 23:43:26,127 - INFO - [33mPress CTRL+C to quit[0m
+2025-08-06 23:43:29,458 - INFO - 127.0.0.1 - - [06/Aug/2025 23:43:29] "[36mGET / HTTP/1.1[0m" 304 -
+2025-08-06 23:43:29,540 - INFO - 127.0.0.1 - - [06/Aug/2025 23:43:29] "GET /api/user HTTP/1.1" 200 -
+2025-08-06 23:43:47,412 - INFO - 127.0.0.1 - - [06/Aug/2025 23:43:47] "GET / HTTP/1.1" 200 -
+2025-08-06 23:45:25,634 - INFO - 127.0.0.1 - - [06/Aug/2025 23:45:25] "[36mGET / HTTP/1.1[0m" 304 -

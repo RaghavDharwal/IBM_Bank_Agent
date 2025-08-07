@@ -1,0 +1,4 @@
+objection_id,application_id,user_email,objection_reason,requested_documents,status,created_by,created_at,resolved_at
+255FFABC,056EF7BB,ishaant.ai27@jecrc.ac.in,sdfg,Aadhar Card,pending,admin,2025-08-07T18:21:12.628124,
+C213EC98,056EF7BB,ishaant.ai27@jecrc.ac.in,objetc,Aadhar card,pending,admin,2025-08-07T18:53:14.602826,
+C4B5C06F,953FBC0A,gauranggupta2310@gmail.com,Document is incorrect,Aadhar Card,pending,admin,2025-08-07T20:17:30.877315,

@@ -1,0 +1,3 @@
+id,application_id,alert_type,title,message,status,created_at
+317db0c9-a2e4-4cdd-a19c-3e5e6f3fc88b,CC487136,documents_uploaded,Documents Uploaded for Review,Application CC487136 has uploaded Aadhaar Card for verification,unread,2025-08-07T12:59:31.591951
+3ffef713-b1f6-4af1-875f-c772cc0564ce,CC487136,document_uploaded,New Document Uploaded - Aadhaar Card,User raghavdharwal07@gmail.com has uploaded Aadhaar Card for application CC487136. Please review and verify the document.,unread,2025-08-07T12:59:35.838557

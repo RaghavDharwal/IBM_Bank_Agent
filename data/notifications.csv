@@ -1,0 +1,40 @@
+id,email,subject,message,type,sent_at
+bae1aaf4-a20b-4cf5-af2c-3f7ed681ac4e,raghavdharwal07@gmail.com,⚠️ Conditional Approval - Application CC487136,"Dear Raghav Dharwal,
+
+Your loan application has received CONDITIONAL APPROVAL from our Watson AI assessment system.
+
+Application Details:
+• Application ID: CC487136
+• Loan Type: Home loan
+• Loan Amount: ₹60,000
+• Assessment Status: CONDITIONALLY APPROVED
+
+Assessment Details:
+Reason: The applicant, Raghav Dharwal, has a good credit score of 751 and a stable employment history. However, the loan amount of ₹60000 and the preferred EMI of ₹25000 may not be feasible based on the applicant's income of ₹500000. The bank may consider the applicant's eligibility and rate calculation based on the existing loans and EMIs.
+
+Required Documents:
+PAN Card, Aadhaar Card, Salary
+
+Recommendations:
+Standard documentation required
+
+Please submit the required documents and fulfill the conditions mentioned above to proceed with your loan application.
+
+Best regards,
+AI Banking Portal Team",application_status,2025-08-07T12:58:33.806349
+1b8f3e71-e6b7-456b-adc1-f39931f825af,raghavdharwal07@gmail.com,Document Uploaded Successfully - Application CC487136,Your Aadhaar Card has been successfully uploaded for application CC487136. Our team will review it shortly and contact you if any additional information is needed.,document_upload,2025-08-07T12:59:35.826084
+845c603a-557a-4094-8f00-24d8942192e8,singhishant37@gmail.com,🔔 Document Upload Alert - Application CC487136,"A new document has been uploaded for review.
+
+Application Details:
+• Application ID: CC487136
+• User Email: raghavdharwal07@gmail.com
+• Document Type: Aadhaar Card
+• Upload Time: August 07, 2025 at 12:59 PM
+
+Action Required:
+Please log in to the admin dashboard to review and verify the uploaded document.
+
+Direct Link: http://127.0.0.1:5001/staff.html
+
+Best regards,
+AI Banking Portal System",admin_alert,2025-08-07T12:59:40.429936
