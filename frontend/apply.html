@@ -406,6 +406,12 @@
             color: #991b1b;
         }
         
+        .status-objection {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
         .application-details {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -505,7 +511,7 @@
         <h1>💼 Loan Application</h1>
         <p class="subtitle">Apply for Personal, Home, or Business Loans</p>
         <div class="nav-links">
-            <a href="index.html" class="nav-link">🤖 LoanBot Chat</a>
+            <a href="index.html" class="nav-link">🤖 Loan Agent</a>
             <a href="staff.html" class="nav-link">👩‍💼 Staff Login</a>
         </div>
     </div>
@@ -831,7 +837,9 @@
             clearStaffSession();
             
             // Check user session with server
-            fetch('/user-auth-status')
+            fetch('/user-auth-status', {
+                credentials: 'include' // Include cookies for session management
+            })
                 .then(response => response.json())
                 .then(data => {
                     if (data.logged_in) {
@@ -875,7 +883,10 @@
         function clearAllSessions() {
             // Clear all sessions and localStorage
             localStorage.clear();
-            fetch('/clear-all-sessions', { method: 'POST' })
+            fetch('/clear-all-sessions', { 
+                method: 'POST',
+                credentials: 'include'
+            })
                 .then(() => {
                     location.reload();
                 })
@@ -885,9 +896,18 @@
         function clearStaffSession() {
             // Clear staff session when user logs in - more aggressive approach
             Promise.all([
-                fetch('/clear-staff-session', { method: 'POST' }).catch(() => {}),
-                fetch('/admin-logout', { method: 'POST' }).catch(() => {}),
-                fetch('/logout', { method: 'POST' }).catch(() => {})
+                fetch('/clear-staff-session', { 
+                    method: 'POST',
+                    credentials: 'include'
+                }).catch(() => {}),
+                fetch('/admin-logout', { 
+                    method: 'POST',
+                    credentials: 'include'
+                }).catch(() => {}),
+                fetch('/logout', { 
+                    method: 'POST',
+                    credentials: 'include'
+                }).catch(() => {})
             ]).then(() => {
                 // Force clear any staff-related localStorage
                 Object.keys(localStorage).forEach(key => {
@@ -1007,13 +1027,15 @@
             const historyContainer = document.getElementById('historyContainer');
             
             // Get applications from server
-            fetch('/user-applications')
+            fetch('/user-applications', {
+                credentials: 'include' // Include cookies for session management
+            })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success && data.applications.length > 0) {
                         let historyHTML = '';
                         data.applications.forEach(app => {
-                            const statusClass = getStatusClass(app.eligibility_status || app.status);
+                            const statusClass = getStatusClass(app.status || app.eligibility_status);
                             const formattedDate = new Date(app.created_at).toLocaleDateString('en-US', {
                                 year: 'numeric',
                                 month: 'short',
@@ -1024,7 +1046,7 @@
                                 <div class="application-card">
                                     <div class="application-header">
                                         <div class="application-id">📋 ${app.application_id}</div>
-                                        <div class="status-badge ${statusClass}">${(app.eligibility_status || app.status).replace('_', ' ')}</div>
+                                        <div class="status-badge ${statusClass}">${(app.status || app.eligibility_status).replace('_', ' ')}</div>
                                     </div>
                                     
                                     <div class="application-details">
@@ -1042,7 +1064,7 @@
                                         </div>
                                         <div class="detail-item">
                                             <div class="detail-label">Current Status</div>
-                                            <div class="detail-value">${getStatusText(app.eligibility_status || app.status)}</div>
+                                            <div class="detail-value">${getStatusText(app.status || app.eligibility_status)}</div>
                                         </div>
                                     </div>
                                     
@@ -1050,7 +1072,9 @@
                                         <button onclick="viewApplicationDetails('${app.application_id}')" class="btn-small btn-view">
                                             👁️ View Details
                                         </button>
-                                        ${(app.eligibility_status === 'APPROVED' || app.eligibility_status === 'CONDITIONALLY_APPROVED') ? 
+                                        ${((app.status === 'APPROVED' || app.status === 'CONDITIONALLY_APPROVED') || 
+                                          (app.eligibility_status === 'APPROVED' || app.eligibility_status === 'CONDITIONALLY_APPROVED')) && 
+                                          app.status !== 'OBJECTION_RAISED' ? 
                                             `<button onclick="uploadDocumentsForApplication('${app.application_id}')" class="btn-small btn-upload">📎 Upload Documents</button>` : ''
                                         }
                                     </div>
@@ -1096,6 +1120,7 @@
                 case 'approved': return 'status-approved';
                 case 'conditionally_approved': return 'status-conditional';
                 case 'rejected': return 'status-rejected';
+                case 'objection_raised': return 'status-objection';
                 default: return 'status-pending';
             }
         }
@@ -1106,6 +1131,7 @@
                 case 'conditionally_approved': return 'Conditional Approval';
                 case 'rejected': return 'Not Approved';
                 case 'pending': return 'Under Review';
+                case 'objection_raised': return 'Action Required - See Drafts';
                 default: return 'Processing';
             }
         }
@@ -1121,7 +1147,9 @@
         
         function uploadDocumentsForApplication(applicationId) {
             // Get application details and show upload section
-            fetch(`/application-details/${applicationId}`)
+            fetch(`/application-details/${applicationId}`, {
+                credentials: 'include' // Include cookies for session management
+            })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
@@ -1152,7 +1180,9 @@ Saved: ${new Date(draft.savedAt).toLocaleString()}`);
         
         function viewApplicationDetails(applicationId) {
             // Fetch and display application details
-            fetch(`/application-details/${applicationId}`)
+            fetch(`/application-details/${applicationId}`, {
+                credentials: 'include' // Include cookies for session management
+            })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
@@ -1192,6 +1222,7 @@ Required Documents: ${app.required_documents || 'N/A'}`);
                 const response = await fetch('/user-login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include', // Include cookies for session management
                     body: JSON.stringify({ email, password })
                 });
                 
@@ -1226,6 +1257,7 @@ Required Documents: ${app.required_documents || 'N/A'}`);
                 const response = await fetch('/user-register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include', // Include cookies for session management
                     body: JSON.stringify({ fullName, email, phone, password })
                 });
                 
@@ -1278,6 +1310,7 @@ Required Documents: ${app.required_documents || 'N/A'}`);
                 const response = await fetch('/apply-comprehensive-loan', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include', // Include cookies for session management
                     body: JSON.stringify(formData)
                 });
                 
@@ -1364,6 +1397,52 @@ Please check your email for next steps and recommendations.`;
         
         // Show document upload section for approved applications
         function showDocumentUploadSection(applicationId, requiredDocs) {
+            // Create document type mapping
+            const docTypeMapping = {
+                'Identity Proof': ['Aadhaar Card', 'PAN Card', 'Passport Size Photos'],
+                'Income Proof': ['Bank Statements (6 months)', 'Salary Slips (3 months)', 'Form 16', 'ITR (2 years)'],
+                'Address Proof': ['Aadhaar Card', 'Bank Statements (6 months)', 'Property Documents'],
+                'PAN Card': ['PAN Card'],
+                'Aadhaar Card': ['Aadhaar Card'],
+                'Salary': ['Salary Slips (3 months)', 'Employment Certificate', 'Form 16'],
+                'Employment Certificate': ['Employment Certificate'],
+                'Bank Statements': ['Bank Statements (6 months)'],
+                'Form 16': ['Form 16'],
+                'Business Registration': ['Business Registration'],
+                'ITR': ['ITR (2 years)'],
+                'Property Documents': ['Property Documents']
+            };
+            
+            // Generate options based on required documents
+            let docOptions = '<option value="">Select Document Type</option>';
+            const requiredDocsList = requiredDocs.split(', ').map(doc => doc.trim());
+            const allAllowedDocs = new Set();
+            
+            requiredDocsList.forEach(requiredDoc => {
+                if (docTypeMapping[requiredDoc]) {
+                    docTypeMapping[requiredDoc].forEach(docType => {
+                        allAllowedDocs.add(docType);
+                    });
+                } else {
+                    // If exact match not found, try partial matching
+                    Object.keys(docTypeMapping).forEach(key => {
+                        if (requiredDoc.toLowerCase().includes(key.toLowerCase()) || key.toLowerCase().includes(requiredDoc.toLowerCase())) {
+                            docTypeMapping[key].forEach(docType => {
+                                allAllowedDocs.add(docType);
+                            });
+                        }
+                    });
+                }
+            });
+            
+            // Convert set to sorted array and create options
+            Array.from(allAllowedDocs).sort().forEach(docType => {
+                docOptions += `<option value="${docType}">${docType}</option>`;
+            });
+            
+            // Add "Other" option at the end
+            docOptions += '<option value="Other">Other</option>';
+            
             const uploadSection = document.createElement('div');
             uploadSection.id = 'documentUploadSection';
             uploadSection.innerHTML = `
@@ -1379,18 +1458,7 @@ Please check your email for next steps and recommendations.`;
                         <div class="form-group">
                             <label for="documentType">Document Type</label>
                             <select id="documentType" required>
-                                <option value="">Select Document Type</option>
-                                <option value="Aadhaar Card">Aadhaar Card</option>
-                                <option value="PAN Card">PAN Card</option>
-                                <option value="Passport Size Photos">Passport Size Photos</option>
-                                <option value="Bank Statements">Bank Statements (6 months)</option>
-                                <option value="Salary Slips">Salary Slips (3 months)</option>
-                                <option value="Employment Certificate">Employment Certificate</option>
-                                <option value="Form 16">Form 16</option>
-                                <option value="Business Registration">Business Registration</option>
-                                <option value="ITR">ITR (2 years)</option>
-                                <option value="Property Documents">Property Documents</option>
-                                <option value="Other">Other</option>
+                                ${docOptions}
                             </select>
                         </div>
                         
@@ -1447,6 +1515,7 @@ Please check your email for next steps and recommendations.`;
             try {
                 const response = await fetch('/upload-documents', {
                     method: 'POST',
+                    credentials: 'include', // Include cookies for session management
                     body: formData
                 });
                 
@@ -1485,6 +1554,7 @@ Please check your email for next steps and recommendations.`;
                 await fetch('/notify-admin-document-upload', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include', // Include cookies for session management
                     body: JSON.stringify({
                         application_id: applicationId,
                         document_type: documentType,
