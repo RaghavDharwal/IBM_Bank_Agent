@@ -504,3 +504,75 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* Objection/Draft specific styles */
+.objection-card {
+  border-left: 4px solid #ef4444 !important;
+  background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%) !important;
+}
+
+.objection-card .application-header {
+  background: linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%);
+  border-bottom: 1px solid #fecaca;
+}
+
+.status-badge.objection {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  font-weight: 600;
+  animation: pulse 2s infinite;
+}
+
+.objection-details {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #fef7f7;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+}
+
+.objection-details h4 {
+  color: #dc2626;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.objection-details p {
+  color: #374151;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.objection-reason {
+  margin-bottom: 1rem;
+}
+
+.requested-documents {
+  margin-bottom: 1rem;
+}
+
+.current-documents {
+  border-top: 1px solid #fecaca;
+  padding-top: 1rem;
+}
+
+.btn-resubmit {
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+  color: white;
+  font-weight: 600;
+}
+
+.btn-resubmit:hover {
+  background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+  transform: translateY(-1px);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}

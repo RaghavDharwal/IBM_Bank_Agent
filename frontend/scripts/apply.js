@@ -161,7 +161,7 @@ function switchAppTab(tabName) {
 
   // Load data for specific tabs
   if (tabName === "drafts") {
-    loadDrafts();
+    loadDraftsFromServer(); // Use the new server-side function
   } else if (tabName === "history") {
     loadHistory();
   }
@@ -887,4 +887,166 @@ async function notifyAdminOfDocumentUpload(
   } catch (error) {
     console.error("Admin notification error:", error);
   }
+}
+
+// New drafts functionality for objected applications
+function loadDraftsFromServer() {
+  const draftsContainer = document.getElementById("draftsContainer");
+  
+  // Show loading state
+  draftsContainer.innerHTML = `
+    <div style="text-align: center; padding: 2rem;">
+      <div style="font-size: 2rem; margin-bottom: 1rem;">⏳</div>
+      <p>Loading your draft applications...</p>
+    </div>
+  `;
+
+  // Get drafts from server
+  fetch("/user-drafts", {
+    credentials: "include",
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success && data.drafts.length > 0) {
+        let draftsHTML = "";
+        data.drafts.forEach((draft) => {
+          const formattedDate = new Date(draft.objection_created_at).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+
+          draftsHTML += `
+            <div class="application-card objection-card">
+              <div class="application-header">
+                <div class="application-id">📋 ${draft.application_id}</div>
+                <div class="status-badge objection">OBJECTION RAISED</div>
+              </div>
+              
+              <div class="application-details">
+                <div class="detail-item">
+                  <div class="detail-label">Loan Type</div>
+                  <div class="detail-value">${draft.loan_type}</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Loan Amount</div>
+                  <div class="detail-value">₹${parseInt(draft.loan_amount).toLocaleString()}</div>
+                </div>
+                <div class="detail-item">
+                  <div class="detail-label">Objection Date</div>
+                  <div class="detail-value">${formattedDate}</div>
+                </div>
+              </div>
+              
+              <div class="objection-details">
+                <div class="objection-reason">
+                  <h4>🚫 Objection Reason:</h4>
+                  <p>${draft.objection_reason}</p>
+                </div>
+                <div class="requested-documents">
+                  <h4>📄 Requested Documents:</h4>
+                  <p>${draft.requested_documents}</p>
+                </div>
+                ${draft.current_documents ? `
+                  <div class="current-documents">
+                    <h4>📎 Current Documents:</h4>
+                    <p>${draft.current_documents}</p>
+                  </div>
+                ` : ''}
+              </div>
+              
+              <div class="application-actions">
+                <button onclick="uploadDocumentsForDraft('${draft.application_id}', '${draft.requested_documents}')" class="btn-small btn-upload">
+                  📎 Upload New Documents
+                </button>
+                <button onclick="resubmitApplication('${draft.application_id}')" class="btn-small btn-resubmit">
+                  🔄 Resubmit Application
+                </button>
+                <button onclick="viewDraftDetails('${draft.application_id}')" class="btn-small btn-view">
+                  👁️ View Full Details
+                </button>
+              </div>
+            </div>
+          `;
+        });
+
+        draftsContainer.innerHTML = draftsHTML;
+      } else {
+        draftsContainer.innerHTML = `
+          <div class="empty-state">
+            <div style="text-align: center; padding: 3rem; color: #6c757d;">
+              <div style="font-size: 4rem; margin-bottom: 1rem;">💾</div>
+              <h4>No Drafts Found</h4>
+              <p>Applications with objections will appear here for resubmission.</p>
+              <button onclick="switchAppTab('newApplication')" class="btn-primary" style="margin-top: 1rem; width: auto; padding: 0.8rem 2rem;">
+                Create New Application
+              </button>
+            </div>
+          </div>
+        `;
+      }
+    })
+    .catch((error) => {
+      console.error("Error loading drafts:", error);
+      draftsContainer.innerHTML = `
+        <div style="text-align: center; padding: 3rem; color: #dc3545;">
+          <div style="font-size: 4rem; margin-bottom: 1rem;">❌</div>
+          <h4>Error Loading Drafts</h4>
+          <p>Please try again later.</p>
+          <button onclick="loadDraftsFromServer()" class="btn-primary" style="margin-top: 1rem; width: auto; padding: 0.8rem 2rem;">
+            Retry
+          </button>
+        </div>
+      `;
+    });
+}
+
+function resubmitApplication(applicationId) {
+  if (!confirm('Are you sure you want to resubmit this application? It will be sent for review again.')) {
+    return;
+  }
+
+  // Show loading
+  const button = event.target;
+  const originalText = button.innerHTML;
+  button.innerHTML = '⏳ Resubmitting...';
+  button.disabled = true;
+
+  fetch('/resubmit-application', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({
+      application_id: applicationId
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      alert('✅ Application resubmitted successfully! You will receive an email confirmation.');
+      // Refresh the drafts view
+      loadDraftsFromServer();
+      // Also refresh history
+      loadHistory();
+    } else {
+      alert('❌ Error: ' + (data.error || 'Failed to resubmit application'));
+      button.innerHTML = originalText;
+      button.disabled = false;
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('❌ Network error. Please try again.');
+    button.innerHTML = originalText;
+    button.disabled = false;
+  });
+}
+
+function viewDraftDetails(applicationId) {
+  // This function can be expanded to show full application details
+  alert(`Viewing details for application ${applicationId}. This feature can be expanded to show full application information.`);
 }

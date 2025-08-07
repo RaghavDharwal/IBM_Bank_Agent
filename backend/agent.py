@@ -813,6 +813,86 @@ def get_user_applications(user_email):
         print(f"Error getting user applications: {e}")
         return []
 
+def get_user_objected_applications(user_email):
+    """Get all objected applications (drafts) for a specific user"""
+    try:
+        drafts = []
+        
+        # Get objections for this user
+        OBJECTIONS_CSV = os.path.join(CSV_DIR, "objections.csv")
+        if not os.path.exists(OBJECTIONS_CSV):
+            return []
+            
+        with open(OBJECTIONS_CSV, 'r', newline='', encoding='utf-8') as file:
+            reader = csv.DictReader(file)
+            user_objections = [row for row in reader if row['user_email'] == user_email and row['status'] == 'pending']
+        
+        # Get application details for each objection
+        for objection in user_objections:
+            app_id = objection['application_id']
+            
+            # Get application details from comprehensive loans
+            try:
+                with open(COMPREHENSIVE_LOANS_CSV, 'r', newline='', encoding='utf-8') as file:
+                    reader = csv.DictReader(file)
+                    for row in reader:
+                        if row['application_id'] == app_id and row['status'] == 'OBJECTION_RAISED':
+                            draft = {
+                                'application_id': app_id,
+                                'objection_id': objection['objection_id'],
+                                'loan_type': row['loan_type'],
+                                'loan_amount': row['loan_amount'],
+                                'objection_reason': objection['objection_reason'],
+                                'requested_documents': objection['requested_documents'],
+                                'created_at': row['created_at'],
+                                'objection_created_at': objection['created_at'],
+                                'current_documents': row.get('uploaded_documents', ''),
+                                'full_application': row
+                            }
+                            drafts.append(draft)
+                            break
+            except FileNotFoundError:
+                continue
+                
+        return drafts
+    except Exception as e:
+        print(f"Error getting user objected applications: {e}")
+        return []
+
+def resubmit_objected_application(application_id, user_email, new_documents=None):
+    """Resubmit an objected application with new documents"""
+    try:
+        # Update application status to pending review
+        update_application_status(application_id, 'resubmitted', 'Application resubmitted with new documents')
+        
+        # Update objection status to resolved
+        OBJECTIONS_CSV = os.path.join(CSV_DIR, "objections.csv")
+        if os.path.exists(OBJECTIONS_CSV):
+            rows = []
+            with open(OBJECTIONS_CSV, 'r', newline='', encoding='utf-8') as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    if row['application_id'] == application_id and row['user_email'] == user_email and row['status'] == 'pending':
+                        row['status'] = 'resolved'
+                        row['resolved_at'] = datetime.now().isoformat()
+                    rows.append(row)
+            
+            # Write back updated data
+            with open(OBJECTIONS_CSV, 'w', newline='', encoding='utf-8') as file:
+                if rows:
+                    fieldnames = rows[0].keys()
+                    writer = csv.DictWriter(file, fieldnames=fieldnames)
+                    writer.writeheader()
+                    writer.writerows(rows)
+        
+        # Add to application history
+        add_application_history(application_id, user_email, 'RESUBMITTED', user_email, f'Application resubmitted with new documents: {new_documents or "No new documents"}')
+        
+        return True
+    except Exception as e:
+        print(f"Error resubmitting application: {e}")
+        return False
+
 def assess_loan_eligibility_with_watson(loan_data):
     """Use Watson AI to assess loan eligibility based on comprehensive data"""
     try:
@@ -2872,6 +2952,62 @@ def get_user_applications_endpoint():
         user_email = session.get('user_email')
         applications = get_user_applications(user_email)
         return jsonify({'success': True, 'applications': applications})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route('/user-drafts', methods=['GET'])
+def get_user_drafts_endpoint():
+    """Get all objected applications (drafts) for logged-in user"""
+    try:
+        if not session.get('user_logged_in'):
+            return jsonify({'success': False, 'error': 'Not authenticated'})
+        
+        user_email = session.get('user_email')
+        drafts = get_user_objected_applications(user_email)
+        return jsonify({'success': True, 'drafts': drafts})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route('/resubmit-application', methods=['POST'])
+def resubmit_application_endpoint():
+    """Resubmit an objected application"""
+    try:
+        if not session.get('user_logged_in'):
+            return jsonify({'success': False, 'error': 'Not authenticated'})
+        
+        data = request.get_json()
+        application_id = data.get('application_id')
+        user_email = session.get('user_email')
+        
+        if not application_id:
+            return jsonify({'success': False, 'error': 'Application ID is required'})
+        
+        # Verify this application belongs to the user and is objected
+        drafts = get_user_objected_applications(user_email)
+        app_exists = any(draft['application_id'] == application_id for draft in drafts)
+        
+        if not app_exists:
+            return jsonify({'success': False, 'error': 'Application not found or not accessible'})
+        
+        # Get the latest uploaded documents for this application
+        uploaded_docs = ""
+        try:
+            with open(COMPREHENSIVE_LOANS_CSV, 'r', newline='', encoding='utf-8') as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    if row['application_id'] == application_id:
+                        uploaded_docs = row.get('uploaded_documents', '')
+                        break
+        except FileNotFoundError:
+            pass
+        
+        success = resubmit_objected_application(application_id, user_email, uploaded_docs)
+        
+        if success:
+            return jsonify({'success': True, 'message': 'Application resubmitted successfully'})
+        else:
+            return jsonify({'success': False, 'error': 'Failed to resubmit application'})
+            
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)})
 
