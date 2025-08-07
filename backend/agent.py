@@ -3316,6 +3316,15 @@ def serve_apply():
     """Serve the loan application page"""
     return send_from_directory('../frontend', 'apply.html')
 
+@app.route('/health')
+def health_check():
+    """Health check endpoint for Render"""
+    return jsonify({
+        'status': 'healthy',
+        'message': 'AI Banking Portal is running',
+        'timestamp': datetime.now().isoformat()
+    })
+
 @app.route('/<path:filename>')
 def serve_static(filename):
     return send_from_directory('../frontend', filename)
@@ -3325,6 +3334,7 @@ initialize_csv_files()
 
 # --- Main Execution ---
 if __name__ == "__main__":
-    # The app runs on port 5000 by default.
-    # You can change it with: app.run(debug=True, port=5001)
-    app.run(debug=False, port=5001)  # Disabled debug to avoid watchdog issues
+    # For Render deployment - use PORT environment variable
+    import os
+    port = int(os.environ.get("PORT", 5001))
+    app.run(debug=False, host="0.0.0.0", port=port)

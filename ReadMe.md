@@ -53,7 +53,33 @@ IBM_Bank_Agent/
 └── ReadMe.md               # This file
 ```
 
-## 🛠️ Setup Instructions
+## � Deployment
+
+### Deploy to Render (Recommended)
+
+This application is ready for deployment on [Render](https://render.com). See the complete [RENDER_DEPLOYMENT.md](RENDER_DEPLOYMENT.md) guide for detailed instructions.
+
+#### Quick Deploy Steps:
+1. Push your code to GitHub
+2. Connect your GitHub repo to Render
+3. Set environment variables (SMTP settings, etc.)
+4. Deploy using the included `render.yaml` configuration
+
+#### Required Environment Variables:
+```env
+PORT=10000
+SECRET_KEY=your-secret-key
+SMTP_SERVER=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USERNAME=your-email@gmail.com
+SMTP_PASSWORD=your-app-password
+BANK_EMAIL=your-bank-email@gmail.com
+BANK_NAME=AI Banking Portal
+```
+
+### Local Development
+
+## �🛠️ Setup Instructions
 
 ### 1. Prerequisites
 

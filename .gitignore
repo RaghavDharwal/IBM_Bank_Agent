@@ -1,0 +1,39 @@
+# Environment variables
+.env
+backend/.env
+
+# Virtual environment
+venv/
+backend/venv/
+env/
+
+# Python cache
+__pycache__/
+backend/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+backend/*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Local development
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
