@@ -1,0 +1,2 @@
+id,username,password_hash,email,role,created_at
+9346c36b-41ae-474d-9e6d-c1f7628ec7ee,admin,scrypt:32768:8:1$1bZoGNabSl5oWBFx$26e9c8dcf234f72bc06d9f3d505384f10a6ee54f7ee0dd5fb27097ed8f4f71c3ee7ce36b7678471aa930d9236b1f5e6b062b09f1ba3241f3efb5018a83f523a8,admin@bank.com,admin,2025-08-07T10:33:10.070308

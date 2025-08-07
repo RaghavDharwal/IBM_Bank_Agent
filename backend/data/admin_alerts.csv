@@ -1,0 +1,7 @@
+alert_id,application_id,alert_type,title,message,status,created_at
+df59b882-b8d8-48c4-afda-1e0e3f8ee386,C9650D89,documents_uploaded,Documents Uploaded for Review,Application C9650D89 has uploaded Aadhaar Card for verification,unread,2025-08-07T12:31:03.292642
+6a67e8f9-4ee1-40c5-a4ec-094d047224ba,C9650D89,document_uploaded,New Document Uploaded - Aadhaar Card,User test@user.com has uploaded Aadhaar Card for application C9650D89. Please review and verify the document.,unread,2025-08-07T12:31:08.578584
+1cf94abe-6c2d-498d-b8ca-6379793eba40,C9650D89,documents_uploaded,Documents Uploaded for Review,Application C9650D89 has uploaded Aadhaar Card for verification,unread,2025-08-07T12:38:10.413138
+50e81832-750e-4907-8f02-008c5b61af34,C9650D89,document_uploaded,New Document Uploaded - Aadhaar Card,User test@user.com has uploaded Aadhaar Card for application C9650D89. Please review and verify the document.,unread,2025-08-07T12:38:14.763639
+726e16e2-bfb8-4be5-95a4-21b189055b42,C9650D89,documents_uploaded,Documents Uploaded for Review,Application C9650D89 has uploaded Aadhaar Card for verification,unread,2025-08-07T12:41:34.575926
+23485ee9-1d70-4f11-908c-2c36ae6267f2,C9650D89,document_uploaded,New Document Uploaded - Aadhaar Card,User test@user.com has uploaded Aadhaar Card for application C9650D89. Please review and verify the document.,unread,2025-08-07T12:41:39.434962

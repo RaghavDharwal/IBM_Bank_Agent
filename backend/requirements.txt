@@ -1,4 +1,7 @@
-Flask
-Flask-Cors
+flask
+flask-cors
 requests
 python-dotenv
+werkzeug
+smtplib
+email
