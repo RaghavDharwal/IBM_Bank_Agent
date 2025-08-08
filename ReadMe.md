@@ -139,5 +139,12 @@ LoanAgent modernizes banking by **replacing outdated processes** with a secure, 
 - IBM Watsonx.ai
 - IBM Cloud
 - Postman, GitHub, Vercel
+- 
+
+## Agent Developed using
+
+- Framework: LangGraph
+- Architecture: ReAct
+- RAG architecture is followed using vector index.
 
 ---
