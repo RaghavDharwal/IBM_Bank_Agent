@@ -1,0 +1,174 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Loan Schemes Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style2.css">
+</head> -->
+<!-- <body> -->
+    <!-- This container holds the main application form -->
+    <!-- <div class="container" id="form-container"> -->
+        <!-- Header -->
+        <!-- <div class="header">
+            <div class="header-left">
+                <h1><i class="fas fa-university"></i> <span data-lang="title">Bank Loan Schemes Dashboard</span></h1>
+                <p><span data-lang="welcome">Welcome! Let's find the perfect loan for you.</span></p>
+            </div>
+            <div class="header-right">
+                <div class="profile-section">
+                    <div class="profile-icon"><i class="fas fa-user"></i></div>
+                    <select class="language-switcher" id="language-selector">
+                        <option value="en">English</option>
+                        <option value="hi">हिंदी</option>
+                        <option value="te">తెలుగు</option>
+                        <option value="ta">தமிழ்</option>
+                    </select>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- Main Content Area with Form -->
+        <!-- <div class="main-content">
+            <form id="loanApplicationForm" class="form-sections"> -->
+                <!-- Personal Details -->
+                <!-- <div class="card personal-details">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-user-circle"></i></div>
+                        <h2 class="card-title"><span data-lang="personal-details">Personal Details</span></h2>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dob">Date of Birth *</label>
+                            <input type="date" id="dob" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Gender *</label>
+                            <div class="radio-group">
+                                <div class="radio-item"><input type="radio" id="male" name="gender" value="male" required><label for="male">Male</label></div>
+                                <div class="radio-item"><input type="radio" id="female" name="gender" value="female"><label for="female">Female</label></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="marital-status">Marital Status *</label>
+                            <select id="marital-status" required>
+                                <option value="">Select status</option>
+                                <option value="single">Single</option>
+                                <option value="married">Married</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="nationality">Nationality *</label>
+                            <input type="text" id="nationality" value="Indian" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact">Contact Number *</label>
+                            <input type="tel" id="contact" placeholder="+91 XXXXX XXXXX" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" placeholder="your.email@example.com" required>
+                        </div>
+                    </div>
+                </div> -->
+
+                <!-- Employment & Eligibility -->
+                <!-- <div class="card eligibility">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-briefcase"></i></div>
+                        <h2 class="card-title">Employment & Eligibility</h2>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Employment Type *</label>
+                            <div class="radio-group">
+                                <div class="radio-item"><input type="radio" id="salaried" name="employment" value="salaried" required><label for="salaried">Salaried</label></div>
+                                <div class="radio-item"><input type="radio" id="self-employed" name="employment" value="self-employed"><label for="self-employed">Self-employed</label></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="employer">Employer/Business Name *</label>
+                            <input type="text" id="employer" placeholder="Company or business name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="income">Annual Income (INR) *</label>
+                            <input type="number" id="income" placeholder="500000" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="existing-loans">Existing Loans & EMIs (Monthly)</label>
+                            <input type="number" id="existing-loans" placeholder="15000">
+                        </div>
+                    </div>
+                </div> -->
+
+                <!-- Loan Details -->
+                <!-- <div class="card loan-details">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                        <h2 class="card-title">Loan Requirements</h2>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label>Type of Loan *</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item"><input type="checkbox" id="home-loan" name="loan-type" value="home"><span>🏠 Home Loan</span></div>
+                                <div class="checkbox-item"><input type="checkbox" id="education-loan" name="loan-type" value="education"><span>🎓 Education Loan</span></div>
+                                <div class="checkbox-item"><input type="checkbox" id="car-loan" name="loan-type" value="car"><span>🚗 Car Loan</span></div>
+                                <div class="checkbox-item"><input type="checkbox" id="business-loan" name="loan-type" value="business"><span>💼 Business Loan</span></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="loan-amount">Loan Amount Required (INR) *</label>
+                            <input type="number" id="loan-amount" placeholder="1000000" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tenure">Loan Tenure (Years) *</label>
+                            <select id="tenure" required>
+                                <option value="">Select tenure</option>
+                                <option value="1">1 Year</option>
+                                <option value="5">5 Years</option>
+                                <option value="10">10 Years</option>
+                                <option value="15">15 Years</option>
+                                <option value="20">20 Years</option>
+                                <option value="30">30 Years</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cibil-score">CIBIL Score</label>
+                            <input type="number" id="cibil-score" placeholder="750" min="300" max="900">
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="purpose">Purpose of Loan *</label>
+                            <textarea id="purpose" rows="3" placeholder="e.g., To purchase a new apartment" required></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="preferred-emi">Preferred Monthly EMI</label>
+                            <div class="slider-container">
+                                <input type="range" id="preferred-emi" class="slider" min="5000" max="100000" value="25000" step="1000">
+                                <div class="slider-value">₹<span id="emi-value">25,000</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="submit-btn" id="submit-btn">
+                            <i class="fas fa-paper-plane"></i> Check Eligibility
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div> -->
+
+    <!-- This container holds the AI's response and is hidden by default -->
+    <!-- <div id="response-container" class="ai-response-container" style="display: none;"> -->
+        <!-- Content will be injected here by JavaScript -->
+    <!-- </div> -->
+
+    <!-- <script src="script2.js"></script>
+</body>
+</html> -->
