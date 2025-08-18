@@ -1,4 +1,4 @@
-# backend/app/__init__.py
+# backend/app/__init__.py file
 from flask import Flask
 from flask_cors import CORS
 from .config import Config
