@@ -1,4 +1,4 @@
-# backend/app/services/notification_service.py
+# backend/app/services/notification_service.py file
 
 import smtplib
 import ssl
