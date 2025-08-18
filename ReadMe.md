@@ -147,3 +147,24 @@ LoanAgent modernizes banking by **replacing outdated processes** with a secure, 
 - RAG architecture is followed using vector index.
 
 ---
+
+## SetUp Guide
+-Clone the Repository:
+git clone https://github.com/PriyanshPorwal999/IBM_Bank_Agent.git
+cd IBM_Bank_Agent
+- Navigate to the Backend Folder:
+cd backend
+- Create a Virtual Environment:
+python -m venv venv
+- Activate the Virtual Environment:
+  - On Windows (PowerShell/CMD): .\venv\Scripts\activate
+  - On macOS/Linux: source venv/bin/activate
+- Install Dependencies:
+pip install -r requirements.txt
+-Configure Environment Variables
+  - Create the .env file: In the backend directory, create a file named .env.
+  - Add Configuration: API_KEY='your_ibm_cloud_api_key' 
+                       AGENT_ENDPOINT='your_watsonx_agent_endpoint_url'
+-  Run the Application
+python run.py                       
+
