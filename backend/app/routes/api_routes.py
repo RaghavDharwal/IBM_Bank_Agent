@@ -1,4 +1,4 @@
-# backend/app/routes/api_routes.py
+# backend/app/routes/api_routes.py file
 
 from flask import Blueprint, request, jsonify, session, current_app
 import requests
