@@ -1,4 +1,4 @@
-# backend/app/routes/admin_routes.py
+# backend/app/routes/admin_routes.py file
 
 from flask import Blueprint, request, jsonify, session, redirect, render_template_string, send_from_directory, current_app
 import os
