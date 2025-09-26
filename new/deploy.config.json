@@ -1,0 +1,53 @@
+{
+  "project": {
+    "name": "bank-portal",
+    "github_repo": "RaghavDharwal/IBM_Bank_Agent",
+    "github_branch": "main",
+    "description": "Bank of India Loan Portal - Production Deployment"
+  },
+  "backend": {
+    "name": "bank-portal-backend",
+    "region": "oregon",
+    "runtime": "python",
+    "plan": "free",
+    "root_directory": "Backend",
+    "build_command": "./build.sh",
+    "start_command": "gunicorn app:app",
+    "health_check_path": "/health",
+    "environment": {
+      "FLASK_ENV": "production",
+      "SECRET_KEY": "CHANGE_ME_TO_SECURE_SECRET_KEY_MINIMUM_32_CHARS",
+      "JWT_SECRET_KEY": "CHANGE_ME_TO_SECURE_JWT_KEY_MINIMUM_32_CHARS",
+      "CORS_ORIGINS": "AUTO_GENERATED_FROM_FRONTEND"
+    }
+  },
+  "frontend": {
+    "name": "bank-portal-frontend", 
+    "region": "oregon",
+    "plan": "free",
+    "root_directory": "AI-agent-Frontend",
+    "build_command": "./build.sh",
+    "publish_directory": "out",
+    "environment": {
+      "NEXT_PUBLIC_API_URL": "AUTO_GENERATED_FROM_BACKEND"
+    }
+  },
+  "database": {
+    "name": "bank-portal-db",
+    "plan": "free",
+    "region": "oregon"
+  },
+  "deployment": {
+    "auto_deploy": true,
+    "branch": "main",
+    "notifications": {
+      "slack_webhook": "",
+      "email": ""
+    }
+  },
+  "monitoring": {
+    "health_checks": true,
+    "uptime_monitoring": true,
+    "log_retention": "7d"
+  }
+}

@@ -32,7 +32,24 @@ Bank-Loan-Portal/
     └── test_api.py      # API Testing Script
 ```
 
-## 🚀 Quick Start
+## ⚡ ONE-COMMAND DEPLOYMENT
+
+Deploy your entire Bank of India Loan Portal to production in **30 seconds**:
+
+```bash
+# Setup and deploy everything automatically  
+./setup.sh && ./deploy.sh
+```
+
+**That's it!** Your application will be live at:
+- 📱 **Frontend:** `https://bank-portal-frontend.onrender.com`
+- 🔧 **Backend:** `https://bank-portal-backend.onrender.com`
+
+See [ONE_COMMAND_DEPLOY.md](./ONE_COMMAND_DEPLOY.md) for complete guide.
+
+---
+
+## 🚀 Quick Start (Development)
 
 ### Prerequisites
 - **Node.js 18+** for frontend
