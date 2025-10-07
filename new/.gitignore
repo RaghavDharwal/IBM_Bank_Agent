@@ -1,0 +1,351 @@
+# =============================================================================
+# Bank of India Loan Portal - Production .gitignore
+# =============================================================================
+
+# =============================================================================
+# Environment & Configuration Files
+# =============================================================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.example.local
+*.env
+
+# =============================================================================
+# Python/Flask Backend
+# =============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# =============================================================================
+# Database Files
+# =============================================================================
+*.db
+*.sqlite
+*.sqlite3
+instance/
+migrations/versions/*.py
+!migrations/versions/__init__.py
+
+# =============================================================================
+# Node.js/Next.js Frontend
+# =============================================================================
+AI-agent-Frontend/node_modules/
+AI-agent-Frontend/.next/
+AI-agent-Frontend/out/
+AI-agent-Frontend/build/
+AI-agent-Frontend/dist/
+
+# Runtime data
+AI-agent-Frontend/pids
+AI-agent-Frontend/*.pid
+AI-agent-Frontend/*.seed
+AI-agent-Frontend/*.pid.lock
+
+# Coverage directory used by tools like istanbul
+AI-agent-Frontend/coverage/
+AI-agent-Frontend/*.lcov
+
+# nyc test coverage
+AI-agent-Frontend/.nyc_output
+
+# Grunt intermediate storage
+AI-agent-Frontend/.grunt
+
+# Bower dependency directory
+AI-agent-Frontend/bower_components
+
+# node-waf configuration
+AI-agent-Frontend/.lock-wscript
+
+# Compiled binary addons
+AI-agent-Frontend/build/Release
+
+# Dependency directories
+AI-agent-Frontend/jspm_packages/
+
+# TypeScript cache
+AI-agent-Frontend/*.tsbuildinfo
+
+# Optional npm cache directory
+AI-agent-Frontend/.npm
+
+# Optional eslint cache
+AI-agent-Frontend/.eslintcache
+
+# Microbundle cache
+AI-agent-Frontend/.rpt2_cache/
+AI-agent-Frontend/.rts2_cache_cjs/
+AI-agent-Frontend/.rts2_cache_es/
+AI-agent-Frontend/.rts2_cache_umd/
+
+# Optional REPL history
+AI-agent-Frontend/.node_repl_history
+
+# Output of 'npm pack'
+AI-agent-Frontend/*.tgz
+
+# Yarn Integrity file
+AI-agent-Frontend/.yarn-integrity
+
+# parcel-bundler cache
+AI-agent-Frontend/.parcel-cache
+
+# Next.js build output
+AI-agent-Frontend/.next
+AI-agent-Frontend/out
+
+# Nuxt.js build / generate output
+AI-agent-Frontend/.nuxt
+AI-agent-Frontend/dist
+
+# Gatsby files
+AI-agent-Frontend/.cache/
+AI-agent-Frontend/public
+
+# Storybook build outputs
+AI-agent-Frontend/.out
+AI-agent-Frontend/.storybook-out
+
+# Temporary folders
+AI-agent-Frontend/tmp/
+AI-agent-Frontend/temp/
+
+# =============================================================================
+# IDE & Editor Files
+# =============================================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# =============================================================================
+# Operating System Files
+# =============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.tmp
+*.temp
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# =============================================================================
+# Logs & Runtime Files
+# =============================================================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# =============================================================================
+# Production & Deployment Files
+# =============================================================================
+
+# Render deployment files (keep build scripts but ignore generated files)
+Backend/instance/
+Backend/*.log
+
+# SSL certificates
+*.pem
+*.key
+*.crt
+*.csr
+
+# Backup files
+*.backup
+*.bak
+*.tmp
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+
+# =============================================================================
+# Security & Sensitive Files
+# =============================================================================
+
+# API Keys & Secrets
+secrets/
+*.secrets
+api_keys.txt
+
+# User uploads (if any)
+uploads/
+media/
+
+# =============================================================================
+# Testing & Coverage
+# =============================================================================
+.coverage
+.pytest_cache/
+test-results/
+test-reports/
+
+# =============================================================================
+# Documentation Build Files
+# =============================================================================
+docs/_build/
+docs/build/
+
+# =============================================================================
+# Miscellaneous
+# =============================================================================
+.venv
+venv/
+ENV/
+env/
+.env
+
+# Temporary files
+*.tmp
+*.temp

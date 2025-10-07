@@ -1,0 +1,17 @@
+# Virtual Environment
+venv/
+__pycache__/
+
+# Environment Variables - VERY IMPORTANT
+.env
+
+# Temporary Files
+*.pyc
+*.tmp
+*~
+
+# Editor-specific files (e.g., for VS Code)
+.vscode/
+
+# Log files
+*.log
